@@ -1248,3 +1248,21 @@ direction: ltr;
   }
 
 }
+
+/* perbaikan tombol harokat matan */
+#toggleHarakat {
+  background: #ffffff;
+  color: #000000;
+}
+
+#toggleHarakat.active {
+  background: #8B1E4F;
+  color: #ffffff;
+}
+
+@media (hover: hover) {
+  #toggleHarakat:hover {
+    background: #8B1E4F;
+    color: #ffffff;
+  }
+}

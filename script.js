@@ -37,8 +37,14 @@ const wrapper = document.querySelector(".wrapper");
 
 if (toggleSidebar) {
   toggleSidebar.addEventListener("click", () => {
+
+  if(window.innerWidth <= 768){
+    wrapper.classList.toggle("mobile-sidebar-open");
+  }else{
     wrapper.classList.toggle("hide-sidebar");
-  });
+  }
+
+});
 }
 
 
@@ -104,15 +110,33 @@ semuaKata.forEach((kata) => {
 
     // FIX POSISI: Menaruh kotak tepat 10px melayang di bawah kata yang diklik
   if (panel) {
-  const rect = this.getBoundingClientRect();
-  const containerRect = document.querySelector(".kitab").getBoundingClientRect();
-  
-  // Menghitung selisih jarak kata terhadap container .kitab yang menjadi parent relative-nya
-  panel.style.top = `${rect.bottom - containerRect.top + 10}px`;
-  panel.style.left = `${rect.left - containerRect.left}px`;
+  if (panel) {
 
-  // Munculkan pop-up ke layar halaman
+  if (window.innerWidth <= 768) {
+
+    // MOBILE
+    panel.style.top = "";
+    panel.style.left = "";
+
+  } else {
+
+    // DESKTOP
+    const rect = this.getBoundingClientRect();
+    const containerRect = document
+      .querySelector(".kitab")
+      .getBoundingClientRect();
+
+    panel.style.top =
+      `${rect.bottom - containerRect.top + 10}px`;
+
+    panel.style.left =
+      `${rect.left - containerRect.left}px`;
+  }
+
   panel.classList.add("show");
+}
+
+
 }
   });
 });
@@ -188,4 +212,21 @@ document.addEventListener("DOMContentLoaded", function () {
       this.classList.toggle("active");
     });
   }
+});
+
+// tombol tutup otomatis sidebar
+document.addEventListener("click", function(e){
+
+  if(window.innerWidth > 768) return;
+
+  const sidebar = document.querySelector(".sidebar");
+
+  if(
+    wrapper.classList.contains("mobile-sidebar-open") &&
+    !sidebar.contains(e.target) &&
+    e.target.id !== "toggleSidebar"
+  ){
+    wrapper.classList.remove("mobile-sidebar-open");
+  }
+
 });

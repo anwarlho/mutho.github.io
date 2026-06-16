@@ -69,11 +69,12 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   color: #ffffff;
 }
 
-#toggleHarakat:hover {
-  background: #8B1E4F !important;
-  color: #ffffff;
+@media (hover: hover) {
+  #toggleHarakat:hover {
+    background: #8B1E4F;
+    color: #ffffff;
+  }
 }
-
 /* Tombol harakat main — samakan style dengan toggleIrob */
 #toggleHarakatMain {
   background: #ffffff;
@@ -485,9 +486,10 @@ ng memiliki class 'kata' sekaligus 'matan' */
   border-radius: 5px;
 }
 
-.kata:hover {
-  background: transparent;
-  color: #C2185B;
+@media (hover: hover) {
+  .kata:hover {
+    color: #8B1E4F;
+  }
 }
 
 .kata.active {

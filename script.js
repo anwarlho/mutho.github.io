@@ -20,17 +20,21 @@ let tampilHarakat = false;
 // Logika mengubah teks arab matan (Berharakat / Polosan)
 if (tombol) {
   tombol.addEventListener("click", function () {
-    if (tampilHarakat) {
-      matan.textContent = tanpaHarakat;
-      tombol.textContent = "Tampilkan Harakat";
-    } else {
-      matan.textContent = denganHarakat;
-      tombol.textContent = "Sembunyikan Harakat";
-    }
+
     tampilHarakat = !tampilHarakat;
+
+    if (tampilHarakat) {
+      matan.textContent = denganHarakat;
+      this.classList.add("active");
+    } else {
+      matan.textContent = tanpaHarakat;
+      this.classList.remove("active");
+    }
+
+    this.textContent = "حر";
+
   });
 }
-
 // Logika klik tombol Menu Hamburger (☰) untuk menyembunyikan Sidebar
 const toggleSidebar = document.getElementById("toggleSidebar");
 const wrapper = document.querySelector(".wrapper");
@@ -93,7 +97,7 @@ semuaKata.forEach((kata) => {
     const jawa = this.getAttribute("data-jawa") || "-";
     const irob = this.getAttribute("data-irob") || "-";
     const tasrif = this.getAttribute("data-tasrif") || "-";
-    const pembahasan = this.getAttribute("data-pembahasan") || "Tidak ada pembahasan khusus untuk kata ini.";
+    const pembahasan = this.getAttribute("data-pembahasan") || "-";
 
     // Masukkan data teks tersebut ke dalam elemen pop-up target
     if (popHarakat) popHarakat.textContent = harakat;
@@ -230,3 +234,5 @@ document.addEventListener("click", function(e){
   }
 
 });
+
+// sidebar footer

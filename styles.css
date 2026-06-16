@@ -36,12 +36,12 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
 .header {
   grid-area: header;
   /* "Hei browser, cari wilayah di dalam peta yang bernama 'header', lalu tempatkan elemen ini di sana. Buat ukuran elemen ini otomatis melebar mengikuti kotak 'header' yang sudah digambar di denah." */
-  background: #f8f8f8;
+  background: #ffffff;
   position: relative;
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   padding: 20px;
-  background: #fcfbfb;
+  
 }
 #toggleHarakat {
   position: absolute;
@@ -49,8 +49,8 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   right: 10px; /* karena teks arab*/
 
   background: #ffffff;
-  color: #6b4f1d;
-  border: 1px solid #d6c7a1;
+  color: #000000;
+  border: 1px solid #000000;
   border-radius: 15px;
 
   padding: 5px 10px;
@@ -62,11 +62,23 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   margin-top: 10px;
 }
 
+
+
+#toggleHarakat.active {
+  background: #8B1E4F;
+  color: #ffffff;
+}
+
+#toggleHarakat:hover {
+  background: #8B1E4F !important;
+  color: #ffffff;
+}
+
 /* Tombol harakat main — samakan style dengan toggleIrob */
 #toggleHarakatMain {
-  background: #f9f6e9;
-  color: #6b4f1d;
-  border: 1px solid #d6c7a1;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
   border-radius: 15px;
   padding: 6px 14px;
   font-size: 0.85rem;
@@ -78,7 +90,8 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
 }
 #toggleHarakatMain:hover,
 #toggleHarakatMain.active {
-  background: #efe6c9;
+  background: #8B1E4F;
+  color: #ffffff;
 }
 
 /* Saat harakat aktif: sembunyikan teks asli, tampilkan data-harakat */
@@ -104,11 +117,11 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
 
 /* Khusus matan tetap merah */
 .kitab.show-harakat-main .kata.matan::after {
-  color: #d62d2d;
+  color: #D81B60;
 }
 
 #toggleHarakat:hover {
-  background: #efe6c9;
+  background: #ededed;
 }
 
 /* matan */
@@ -228,7 +241,7 @@ Konten di dalam main ini biasanya hanya bergerak ke satu arah saja (1 Dimensi): 
 /* Khusus untuk elemen ya
 ng memiliki class 'kata' sekaligus 'matan' */
 .kata.matan {
-  color: #d32f2f; /* Warna Magenta (bisa diganti #D32F2F jika ingin magenta gelap/merah maroon) */
+  color: #D81B60; /* Warna Magenta (bisa diganti #D32F2F jika ingin magenta gelap/merah maroon) */
   font-weight: bold; /* Membedakan ketebalan matan */
 }
 
@@ -281,7 +294,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 /* footer */
 .footer {
   grid-area: footer;
-  background: #f2dda0;
+  background: #fefefe;
   border: 1px solid #d7d7d7;
   padding: 15px;
   text-align: center;
@@ -408,7 +421,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 #popHarakat {
   /* Ganti 'Scheherazade New' dengan nama font Arab pilihanmu */
   font-family: "Scheherazade New", serif;
-  font-size: 2.5rem;
+  font-size: 1rem;
 
   text-align: center;
   margin-top: 10px;
@@ -474,19 +487,14 @@ ng memiliki class 'kata' sekaligus 'matan' */
 
 .kata:hover {
   background: transparent;
-  color: #2e7d32;
+  color: #C2185B;
 }
 
 .kata.active {
-  background: rgba(255, 255, 255, 0.6);
-
-  backdrop-filter: blur(8px);
-
-  border-radius: 10px;
-
-  color: #111;
-
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  color: #8B1E4F;
+  font-weight: bold;
+  box-shadow: none;
 }
 
 /* ---------------------------------------------------------------- */
@@ -503,9 +511,9 @@ ng memiliki class 'kata' sekaligus 'matan' */
 }
 
 #toggleIrob {
-  background: #f9f6e9;
-  color: #6b4f1d;
-  border: 1px solid #d6c7a1;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
   border-radius: 15px;
   padding: 6px 14px;
   font-size: 0.85rem;
@@ -517,7 +525,8 @@ ng memiliki class 'kata' sekaligus 'matan' */
 
 #toggleIrob:hover,
 #toggleIrob.active {
-  background: #efe6c9;
+  background: #8B1E4F;
+  color: #ffffff;
 }
 
 /* Mengatur Posisi Huruf I'rob Kecil di Atas Kata */
@@ -567,7 +576,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 }
 
 .kata.matan {
-  color: #d62d2d; /* Matan = Magenta */
+  color: #D81B60; /* Matan = Magenta */
   font-weight: bold;
 }
 
@@ -654,7 +663,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 /* Header Kata Arab */
 #popHarakat {
   font-family: "Scheherazade New", serif;
-  font-size: 2.6rem;
+  font-size: 1rem;
   text-align: center;
   color: #1f2937;
   margin: 10px 0 16px 0;
@@ -689,7 +698,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 
 /* Aksen Hijau Khas Quran.com */
 .tab-btn.active {
-  color: #2e7d32; 
+  color: #8B1E4F; 
 }
 
 .tab-btn.active::after {
@@ -699,7 +708,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #2e7d32;
+  background-color: #8B1E4F;
 }
 
 /* Area Scroll Isi Konten Tab */
@@ -748,10 +757,10 @@ ng memiliki class 'kata' sekaligus 'matan' */
 .quran-text-jawa {
   font-family: "Scheherazade New", serif;
   font-size: 1.5rem;
-  color: #374151;
+  color: #000000;
   line-height: 1.5;
   direction: ltr;
-  text-align: center;
+  text-align: justify;
 }
 
 .quran-text {
@@ -761,25 +770,26 @@ ng memiliki class 'kata' sekaligus 'matan' */
 }
 
 .quran-text-pembahasan {
-  font-size: 0.95rem;
-  color: #374151;
+  font-size: 1.5rem;
+  color: #000000;
   line-height: 1.6;
   text-align: justify;
+direction: ltr;
+
 }
 
 .quran-badge {
-  display: inline-block;
+ display: contents;
   background: #e8f5e9;
-  color: #2e7d32;
   padding: 4px 12px;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 /* Header Kata Arab */
 #popHarakat {
   font-family: "Scheherazade New", serif;
-  font-size: 2.8rem;
+  font-size: 1rem;
   text-align: center;
   color: #1f2937;
   margin: 10px 0 20px 0;
@@ -806,15 +816,16 @@ ng memiliki class 'kata' sekaligus 'matan' */
   position: relative;
   transition: color 0.2s;
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .tab-btn:hover {
-  color: #111827;
+  color: #000000;
 }
 
 /* Garis bawah hijau khas Quran.com saat aktif */
 .tab-btn.active {
-  color: #2e7d32; 
+  color: #000000; 
 }
 
 .tab-btn.active::after {
@@ -824,7 +835,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #2e7d32;
+  background-color: #8B1E4F;
 }
 
 /* Container & Area Scroll Konten Tab */
@@ -871,14 +882,7 @@ ng memiliki class 'kata' sekaligus 'matan' */
 }
 
 /* Tipografi Konten */
-.quran-text-jawa {
-  font-family: "Scheherazade New", serif;
-  font-size: 1.4rem;
-  color: #374151;
-  line-height: 1.5;
-  direction: rtl;
-  text-align: right;
-}
+
 
 .quran-text {
   font-size: 0.95rem;
@@ -886,22 +890,17 @@ ng memiliki class 'kata' sekaligus 'matan' */
   line-height: 1.5;
 }
 
-.quran-text-pembahasan {
-  font-size: 0.95rem;
-  color: #374151;
-  line-height: 1.6;
-  text-align: justify;
-}
+
 
 /* Badge untuk kode I'rob */
 .quran-badge {
-  display: inline-block;
+
   background: #e8f5e9;
-  color: #2e7d32;
-  padding: 4px 12px;
-  border-radius: 8px;
+  color: #000000;
+ 
+  
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 #popJawa,
@@ -1237,6 +1236,15 @@ ng memiliki class 'kata' sekaligus 'matan' */
     border-radius:50% !important;
 
     z-index:999999 !important;
+  }
+
+}
+
+/* harokat */
+@media (max-width:768px){
+
+  .arab-ltr{
+    padding-top:60px;
   }
 
 }

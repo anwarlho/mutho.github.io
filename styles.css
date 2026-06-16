@@ -141,8 +141,8 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   direction: rtl;
   text-align: right;
   font-family: "Scheherazade New", serif;
-  font-size: 1.5rem;
-  line-height: 2;
+  font-size: 1.1rem;
+  line-height: 1.8;
 
   /* Ruang agar tidak tertimpa tombol */
   padding-top: 30px;
@@ -933,7 +933,7 @@ direction: ltr;
   }
 
   .arab-ltr {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.8;
   }
 

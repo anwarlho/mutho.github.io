@@ -1,4 +1,6 @@
-/* reset */
+/* ==========================================================================
+   1. RESET & BASE STYLES
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -11,70 +13,244 @@ body {
   padding: 20px;
 }
 
-/* Layout */
+/* ==========================================================================
+   2. LAYOUT (GRID SYSTEM)
+   ========================================================================== */
 .wrapper {
-  /* wrapper adalah salah satu nama class yang paling sering digunakan di dunia. Fungsinya adalah sebagai kotak utama yang membungkus elemen-elemen lain di dalam halaman web agar tampilannya rapi, konsisten, dan berada di tengah layar.
-
-Tanpa pembungkus, konten website kamu akan melar dari ujung kiri sampai ujung kanan layar (terutama pada monitor komputer yang lebar), sehingga sangat tidak nyaman dibaca.
-Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
-
+  /* wrapper adalah salah satu nama class yang paling sering digunakan di dunia. 
+     Fungsinya adalah sebagai kotak utama yang membungkus elemen-elemen lain di dalam halaman web 
+     agar tampilannya rapi, konsisten, dan berada di tengah layar.
+     Tanpa pembungkus, konten website kamu akan melar dari ujung kiri sampai ujung kanan layar 
+     (terutama pada monitor komputer yang lebar), sehingga sangat tidak nyaman dibaca.
+     Nama Alternatif Lainnya : .container, .pembungkus, .main-container */
   max-width: 1200px;
   margin: 40px auto;
   display: grid;
   grid-template-columns: 3fr 1fr; /* Membagi jadi 2 kolom: 75% dan 25% */
 
-  /* Ketika kamu menulis 3fr 1fr, kamu memberi tahu browser untuk:Menjumlahkan total pecahan: $3 + 1 = 4\text{ bagian}$.Membagi total lebar ruang menjadi 4 bagian yang sama besar.Memberikan 3 bagian untuk kolom pertama.Memberikan 1 bagian untuk kolom kedua.Artinya, kolom pertama akan selalu berukuran 3 kali lebih besar daripada kolom kedua, sekecil atau sebesar apa pun layar yang digunakan pengguna (sangat responsif). */
+  /* Ketika kamu menulis 3fr 1fr, kamu memberi tahu browser untuk:
+     Menjumlahkan total pecahan: 3 + 1 = 4 bagian.
+     Membagi total lebar ruang menjadi 4 bagian yang sama besar.
+     Memberikan 3 bagian untuk kolom pertama.
+     Memberikan 1 bagian untuk kolom kedua.
+     Artinya, kolom pertama akan selalu berukuran 3 kali lebih besar daripada kolom kedua, 
+     sekecil atau sebesar apa pun layar yang digunakan pengguna (sangat responsif). */
   grid-template-areas:
     "header header" /* Baris 1: Kolom pertama & kedua diisi oleh header */
     "main sidebar" /* Baris 2: Kolom pertama diisi main, kolom kedua diisi sidebar */
     "footer footer"; /* Baris 3: Kolom pertama & kedua diisi oleh footer */
-
   gap: 10px;
 }
 
-/* header */
+/* ==========================================================================
+   3. HEADER & MATAN ATAS
+   ========================================================================== */
 .header {
   grid-area: header;
-  /* "Hei browser, cari wilayah di dalam peta yang bernama 'header', lalu tempatkan elemen ini di sana. Buat ukuran elemen ini otomatis melebar mengikuti kotak 'header' yang sudah digambar di denah." */
+  /* "Hei browser, cari wilayah di dalam peta yang bernama 'header', lalu tempatkan elemen ini di sana. 
+     Buat ukuran elemen ini otomatis melebar mengikuti kotak 'header' yang sudah digambar di denah." */
   background: #ffffff;
   position: relative;
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   padding: 20px;
-  
+  min-height: 180px;
+  height: auto;
+  text-align: right;
 }
+
+.header h1 {
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.header p {
+  font-size: 1.5rem;
+}
+
+.arab-ltr {
+  direction: rtl;
+  text-align: right;
+  font-family: "Scheherazade New", serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  padding-top: 30px; /* Ruang agar tidak tertimpa tombol */
+}
+
+/* Tombol Perubahan Harakat di Header */
 #toggleHarakat {
   position: absolute;
   top: 10px;
-  right: 10px; /* karena teks arab*/
-
+  right: 10px; /* di kanan karena teks arab */
   background: #ffffff;
   color: #000000;
   border: 1px solid #000000;
   border-radius: 15px;
-
   padding: 5px 10px;
   font-size: 0.8rem;
   cursor: pointer;
-
   transition: 0.3s;
   margin-right: 10px;
   margin-top: 10px;
 }
 
-
-
 #toggleHarakat.active {
-  background: #8B1E4F;
+  background: #8b1e4f;
   color: #ffffff;
+}
+
+#toggleHarakat:hover {
+  background: #ededed;
 }
 
 @media (hover: hover) {
   #toggleHarakat:hover {
-    background: #8B1E4F;
+    background: #8b1e4f;
     color: #ffffff;
   }
 }
+
+/* ==========================================================================
+   4. MAIN CONTENT & TEXT KITAB
+   ========================================================================== */
+.main-content {
+  grid-area: main;
+  min-height: 900px;
+  border: 1px solid #d7d7d7;
+  background: #ffffff;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  direction: rtl; /* penanda tombol i'rob */
+  font-family: "Scheherazade New", serif;
+
+  /* Ketika kamu memberikan perintah ini pada sebuah kotak/wadah, semua elemen anak yang ada langsung 
+     di dalamnya (disebut flex items) akan berubah menjadi super fleksibel. Mereka akan otomatis berjejer rapi, 
+     bisa diatur ukurannya secara otomatis, dan sangat mudah dipindah-pindah posisinya tanpa merusak tata letak.
+     
+     Secara bawaan (default), elemen HTML seperti <div>, <p>, atau <h1> memiliki sifat menumpuk ke bawah seperti tangga.
+     Namun, begitu wadah utamanya diberi display: flex;, terjadi perubahan instan:
+     1. Berjejer ke Samping: Otomatis berjejer ke samping (menjadi kolom) dari kiri ke kanan.
+     2. Tinggi Otomatis Sama: Mengikuti elemen yang paling tinggi di dalam kelompok tersebut.
+
+     Alasan .wrapper gabung Grid & Flexbox: 
+     - .wrapper menggunakan Grid untuk mengatur tata letak besar (Makro) halaman website (2 Dimensi).
+     - main menggunakan Flexbox untuk mengatur konten kecil (Mikro) yang ada di dalamnya (1 Dimensi). */
+}
+
+.kitab {
+  direction: rtl;
+  text-align: right;
+  max-width: 800px; /* Menjaga lebar kolom teks kitab tetap ideal */
+  margin: 0 auto;
+  position: relative;
+  overflow: visible;
+}
+
+.kitab h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.kitab > p {
+  direction: rtl;
+  text-align: justify;
+  line-height: 25px;
+  font-size: 0;
+}
+
+/* Elemen Kata Per Kata */
+.kata {
+  display: inline-block; /* Mengunci keutuhan kata agar jarak spasinya konsisten dan i'rab pas di tengah */
+  position: relative;
+  cursor: pointer;
+  word-spacing: normal;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  margin-top: 12px; /* Memberi ruang di atas untuk huruf i'rab */
+  margin-left: 6px;
+  margin-right: 1px;
+  padding: 0 2px;
+  color: #000000; /* DEFAULT WARNA SYARAH: Semua teks di dalam .kata berwarna hitam */
+  overflow: visible;
+}
+
+.kata.active {
+  background: transparent;
+  color: #8b1e4f;
+  font-weight: bold;
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  .kata:hover {
+    color: #8b1e4f;
+  }
+}
+
+/* --- PEWARNAAN MATAN --- */
+.kata.matan {
+  color: #d81b60; /* Warna Magenta (bisa diganti #D32F2F jika ingin magenta gelap/merah maroon) */
+  font-weight: bold; /* Membedakan ketebalan matan */
+}
+
+/* ==========================================================================
+   5. STICKY INTERACTIVE CONTROLS (I'ROB & HARAKAT MAIN)
+   ========================================================================== */
+.sticky-irob-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-start; /* Tombol merapat ke kiri kertas (tidak menabrak teks Arab) */
+  margin-bottom: -30px;
+}
+
+/* Tombol I'rob */
+#toggleIrob {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 15px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+#toggleIrob:hover,
+#toggleIrob.active {
+  background: #8b1e4f;
+  color: #ffffff;
+}
+
+/* Mengatur Posisi Huruf I'rob Kecil di Atas Kata */
+.kata::before {
+  content: attr(data-irob); /* Mengambil huruf dari properti data-irob */
+  position: absolute;
+  top: -16px; /* Letak tinggi huruf i'rab */
+  right: 2px;
+  transform: translateX(-50%);
+  font-family: "Scheherazade New", serif;
+  font-size: 0.75rem;
+  color: #4a4a4a;
+  opacity: 0; /* Kondisi Awal: Disembunyikan */
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+/* Kondisi Ketika Tombol Aktif: Munculkan I'rob */
+.kitab.show-irob .kata::before {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Tombol harakat main — samakan style dengan toggleIrob */
 #toggleHarakatMain {
   background: #ffffff;
@@ -89,9 +265,10 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   transition: all 0.2s ease;
   margin-right: 8px;
 }
+
 #toggleHarakatMain:hover,
 #toggleHarakatMain.active {
-  background: #8B1E4F;
+  background: #8b1e4f;
   color: #ffffff;
 }
 
@@ -116,484 +293,22 @@ Nama Alternatif Lainnya : .container, .pembungkus, .mai-container */
   white-space: nowrap;
 }
 
-/* Khusus matan tetap merah */
+/* Khusus matan tetap merah ketika mode harakat aktif */
 .kitab.show-harakat-main .kata.matan::after {
-  color: #D81B60;
-}
-
-#toggleHarakat:hover {
-  background: #ededed;
-}
-
-/* matan */
-.header {
-  height: 180px;
-
-  padding: 20px;
-  text-align: right;
-}
-.header h1 {
-  font-size: 0.7rem;
-  font-weight: 800;
-}
-
-.arab-ltr {
-  direction: rtl;
-  text-align: right;
-  font-family: "Scheherazade New", serif;
-  font-size: 1.1rem;
-  line-height: 1.8;
-
-  /* Ruang agar tidak tertimpa tombol */
-  padding-top: 30px;
-}
-
-/* Main */
-.main-content {
-  grid-area: main;
-  min-height: 900px;
-  border: 1px solid #d7d7d7;
-  background: #ffffff;
-  padding: 40px;
-
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  /* penanda tombol i'rob */
-  direction: rtl;
-
-  font-family: "Scheherazade New", serif;
-
-  /* Ketika kamu memberikan perintah ini pada sebuah kotak/wadah, semua elemen anak yang ada langsung di dalamnya (disebut flex items) akan berubah menjadi super fleksibel. Mereka akan otomatis berjejer rapi, bisa diatur ukurannya secara otomatis, dan sangat mudah dipindah-pindah posisinya tanpa merusak tata letak.
-
-Sederhananya, ini adalah "sihir" CSS yang paling sering digunakan untuk merapikan posisi komponen website modern.
-Perubahan Otomatis Setelah Pakai display: flex;
-
-Secara bawaan (default), elemen HTML seperti <div>, <p>, atau <h1> memiliki sifat menumpuk ke bawah seperti tangga.
-
-Namun, begitu wadah utamanya diberi display: flex;, terjadi perubahan instan:
-
-    Berjejer ke Samping: Semua elemen di dalamnya yang tadinya menumpuk ke bawah, otomatis akan langsung berjejer ke samping (menjadi kolom) dari kiri ke ke kanan.
-
-    Tinggi Otomatis Sama: Semua elemen anak akan otomatis memiliki tinggi yang sama rata, mengikuti elemen yang paling tinggi di dalam kelompok tersebut. */
-  /* Alasan singkatnya adalah: Mereka punya spesialisasi tugas yang berbeda. * .wrapper menggunakan Grid untuk mengatur tata letak besar (Makro) halaman website.
-
-    main menggunakan Flexbox untuk mengatur konten kecil (Mikro) yang ada di dalam elemen tersebut.
-
-Mari kita bedah alasan mendalam kenapa developer-nya sengaja menggabungkan keduanya:
-1. .wrapper Pakai Grid karena Butuh Layout 2 Dimensi (Kolom & Baris)
-
-Sesuai kode yang kamu punya sebelumnya, .wrapper bertugas membagi halaman menjadi struktur besar: ada header di atas, main dan sidebar berdampingan di tengah, dan footer di bawah.
-
-Grid sangat unggul di sini karena mampu mengatur kolom dan baris sekaligus secara bersamaan (2 Dimensi). Flexbox akan sangat kesulitan jika dipaksa membuat layout kompleks seperti ini.
-2. main Pakai Flexbox karena Hanya Butuh Layout 1 Dimensi (Satu Arah)
-
-Setelah struktur besar websitemu jadi berkat Grid, sekarang kita masuk ke dalam kotak main (konten utama). Di dalam main, biasanya berisi elemen-elemen seperti:
-
-    Deretan kartu artikel (cards) yang berjejer ke samping.
-
-    Tombol-tombol yang ingin diratakan ke tengah.
-
-    Gambar dan teks yang ingin disejajarkan agar rapi atas-bawahnya.
-
-Konten di dalam main ini biasanya hanya bergerak ke satu arah saja (1 Dimensi): kalau tidak berjejer ke samping (horizontal), ya menumpuk ke bawah (vertical). Karena tugasnya hanya satu arah dan butuh fleksibilitas tinggi agar kontennya tidak berantakan, maka Flexbox adalah alat yang jauh lebih tepat dan mudah digunakan daripada Grid. */
-}
-
-/* isi konten */
-
-.kitab {
-  direction: rtl;
-  text-align: right;
-  max-width: 800px; /* TAMBAHKAN INI: Menjaga lebar kolom teks kitab tetap ideal */
-  margin: 0 auto;
-  position: relative;
-}
-
-.kitab h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.kitab > p {
-  direction: rtl;
-  text-align: justify;
-  line-height: 25px;
-  font-size: 0;
-}
-
-.kata {
-  display: inline-block; /* Mengunci keutuhan kata agar jarak spasinya konsisten */
-  position: relative;
-  cursor: pointer;
-  word-spacing: normal;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  margin-top: 15px;
-  margin-left: 1px;
-  margin-right: 1px;
-  padding: 0;
-  /* DEFAULT WARNA SYARAH: Semua teks di dalam .kata berwarna hitam */
-  color: #000000;
-}
-
-/* --- PEWARNAAN MATAN --- */
-/* Khusus untuk elemen ya
-ng memiliki class 'kata' sekaligus 'matan' */
-.kata.matan {
-  color: #D81B60; /* Warna Magenta (bisa diganti #D32F2F jika ingin magenta gelap/merah maroon) */
-  font-weight: bold; /* Membedakan ketebalan matan */
-}
-
-/* sidebar */
-.sidebar {
-  grid-area: sidebar;
-  background: #ffffff;
-  border: 1px solid #d7d7d7;
-  width: 100%;
-}
-
-.sidebar-header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 15px;
-  background: #f5f5f5;
-  border-bottom: 1px solid #d7d7d7;
-
-  font-size: 1.5rem;
-  font-weight: bold;
-  font-family: "Scheherazade New", serif;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  direction: rtl;
-  text-align: right;
-}
-
-.sidebar li {
-  padding: 15px 20px;
-  border-bottom: 1px solid #ececec;
-  font-size: 1.3rem;
-  cursor: pointer;
-  font-family: "Scheherazade New", serif;
-}
-.sidebar li:hover {
-  background: #f8f8f8;
-}
-
-.sidebar-title {
-  text-align: center;
-}
-
-/* footer */
-.footer {
-  grid-area: footer;
-  background: #fefefe;
-  border: 1px solid #d7d7d7;
-  padding: 15px;
-  text-align: center;
-}
-
-/* hide sidebar */
-.sidebar {
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-.wrapper.hide-sidebar {
-  grid-template-columns: 1fr 60px;
-}
-
-.wrapper.hide-sidebar .sidebar {
-  /* width: 60px; */
-  grid-template-columns: 1fr 60px;
-}
-
-.wrapper.hide-sidebar .sidebar ul {
-  display: none;
-}
-.wrapper.hide-sidebar .sidebar-title {
-  display: none;
-}
-
-.wrapper.hide-sidebar .sidebar {
-  width: 60px;
-}
-#toggleSidebar {
-  position: absolute;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.wrapper.hide-sidebar .sidebar-header {
-  justify-content: center;
-}
-
-/* Komentar */
-.bottom-sheet {
-  position: fixed;
-
-  left: 0;
-  right: 0;
-  bottom: -100%;
-
-  height: 45vh;
-
-  background: white;
-
-  border-radius: 20px 20px 0 0;
-
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-
-  transition: bottom 0.3s ease;
-
-  z-index: 9999;
-}
-
-
-
-@media (max-width: 768px) {
-  .apple-popup {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    top: auto;
-    width: auto;
-    max-height: 50vh;
-  }
-}
-
-
-.apple-popup.show {
-  display: block;
-}
-
-@keyframes appleFade {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#closePanel {
-  position: absolute;
-
-  top: 12px;
-  right: 12px;
-
-  width: 32px;
-  height: 32px;
-
-  border: none;
-  border-radius: 50%;
-
-  background: rgba(0, 0, 0, 0.05);
-
-  backdrop-filter: blur(10px);
-
-  cursor: pointer;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  transition: all 0.2s ease;
-}
-
-#closePanel:hover {
-  background: rgba(0, 0, 0, 0.12);
-  transform: scale(1.05);
-}
-
-#popHarakat {
-  /* Ganti 'Scheherazade New' dengan nama font Arab pilihanmu */
-  font-family: "Scheherazade New", serif;
-  font-size: 1rem;
-
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
-
-  color: #111;
-}
-
-.bottom-sheet.show {
-  bottom: 0;
-}
-
-.sheet-header {
-  position: sticky;
-  top: 0;
-
-  background: white;
-
-  padding: 10px;
-
-  display: flex;
-  justify-content: center;
-
-  border-bottom: 1px solid #eee;
-}
-
-.sheet-handle {
-  width: 60px;
-  height: 6px;
-
-  border-radius: 10px;
-
-  background: #ccc;
-}
-
-#closeSheet {
-  position: absolute;
-  right: 15px;
-
-  border: none;
-  background: none;
-
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.sheet-content {
-  height: calc(45vh - 50px);
-
-  overflow-y: auto;
-
-  padding: 20px;
-}
-
-
-
-/* Agar terlihat bisa diklik*/
-.kata {
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 5px;
-}
-
-@media (hover: hover) {
-  .kata:hover {
-    color: #8B1E4F;
-  }
-}
-
-.kata.active {
-  background: transparent;
-  color: #8B1E4F;
-  font-weight: bold;
-  box-shadow: none;
-}
-
-/* ---------------------------------------------------------------- */
-
-/* Menghias Wadah & Tombol Sticky I'rob */
-.sticky-irob-container {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 10px;
-  z-index: 100;
-  display: flex;
-  justify-content: flex-start; /* Tombol merapat ke kiri kertas (tidak menabrak teks Arab) */
-  margin-bottom: -30px;
-}
-
-#toggleIrob {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-  border-radius: 15px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-}
-
-#toggleIrob:hover,
-#toggleIrob.active {
-  background: #8B1E4F;
-  color: #ffffff;
-}
-
-/* Mengatur Posisi Huruf I'rob Kecil di Atas Kata */
-.kata::before {
-  content: attr(data-irob); /* Mengambil huruf dari properti data-irob */
-  position: absolute;
-  top: -16px; /* Letak tinggi huruf i'rab */
-  right: 2px;
-  transform: translateX(-50%);
-  font-family: "Scheherazade New", serif;
-  font-size: 0.75rem;
-  color: #4a4a4a;
-  pointer-events: none;
-
-  /* Kondisi Awal: Disembunyikan */
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease;
+  color: #d81b60;
 }
 
 .kata::before,
 .kata::after {
   pointer-events: none;
 }
-/* Kondisi Ketika Tombol Aktif: Munculkan I'rob */
-.kitab.show-irob .kata::before {
-  opacity: 1;
-  visibility: visible;
-}
-
-.kitab {
-  overflow: visible;
-}
-
-.kata {
-  overflow: visible;
-}
-
-/* Pewarnaan Teks Kitab */
-.kata {
-  display: inline-block; /* Kunci agar spasi justify konsisten dan i'rab pas di tengah */
-  position: relative;
-  color: #000000; /* Default Syarah = Hitam */
-  margin-top: 12px; /* Memberi ruang di atas untuk huruf i'rab */
-  margin-left: 6px;
-  padding: 0 2px;
-}
-
-.kata.matan {
-  color: #D81B60; /* Matan = Magenta */
-  font-weight: bold;
-}
 
 /* ==========================================================================
-   MODERN POP-UP & TAB SYSTEM (ALA QURAN.COM)
+   6. MODERN POP-UP & TAB SYSTEM (ALA QURAN.COM)
    ========================================================================== */
-
-/* ==========================================================================
-   MODERN POP-UP & TAB SYSTEM (ALA QURAN.COM) - FIX POSITION
-   ========================================================================== */
-
 .apple-popup {
   display: none; /* Sembunyi saat awal */
   position: absolute; /* WAJIB absolute agar bisa mengikuti posisi kata dari JS */
-  /* TAMBAHKAN DUA BARIS INI UNTUK RESET KOORDINAT AWAL */
   top: 0;
   left: 0;
   width: 380px;
@@ -605,7 +320,13 @@ ng memiliki class 'kata' sekaligus 'matan' */
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   z-index: 9999; /* Memastikan pop-up berada di lapisan paling atas */
   overflow: visible;
+  display: none;
+  flex-direction: column;
   animation: quranFadeUp 0.25s ease-out;
+}
+
+.apple-popup.show {
+  display: flex;
 }
 
 @keyframes quranFadeUp {
@@ -617,24 +338,6 @@ ng memiliki class 'kata' sekaligus 'matan' */
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Responsif untuk HP / Mobile */
-@media (max-width: 768px) {
-  .apple-popup {
-    position: fixed !important;
-    left: 16px !important;
-    right: 16px !important;
-    bottom: 16px !important;
-    top: auto !important;
-    width: auto !important;
-    max-height: 50vh;
-  }
-}
-
-.apple-popup.show {
-  display: flex;
-  flex-direction: column;
 }
 
 /* Tombol Close Minimalis (✕) di Sisi Kiri */
@@ -660,134 +363,9 @@ ng memiliki class 'kata' sekaligus 'matan' */
 #closePanel:hover {
   background: #e8e8ed;
   color: #1d1d1f;
+  transform: scale(1.05);
 }
 
-/* Header Kata Arab */
-#popHarakat {
-  font-family: "Scheherazade New", serif;
-  font-size: 1rem;
-  text-align: center;
-  color: #1f2937;
-  margin: 10px 0 16px 0;
-  line-height: 1.2;
-}
-
-/* Menu Tab Navigation */
-.quran-tabs {
-  display: flex;
-  border-bottom: 2px solid #f3f4f6;
-  margin-bottom: 16px;
-  gap: 8px;
-}
-
-.tab-btn {
-  flex: 1;
-  background: none;
-  border: none;
-  padding: 10px 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.2s;
-  text-align: center;
-}
-
-.tab-btn:hover {
-  color: #111827;
-}
-
-/* Aksen Hijau Khas Quran.com */
-.tab-btn.active {
-  color: #8B1E4F; 
-}
-
-.tab-btn.active::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #8B1E4F;
-}
-
-/* Area Scroll Isi Konten Tab */
-.quran-tab-container {
-  overflow-y: visible;
-  flex-grow: 1;
-  padding-right: 4px;
-}
-
-.quran-tab-container::-webkit-scrollbar {
-  width: 4px;
-}
-.quran-tab-container::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
-  border-radius: 4px;
-}
-
-/* Sembunyikan/Tampilkan Konten Tab */
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
-
-/* Kotak Informasi di Dalam Tab */
-.quran-card {
-  background: #f9fafb;
-  border: 1px solid #f3f4f6;
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 10px;
-}
-
-.quran-label {
-  display: block;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #9ca3af;
-  margin-bottom: 6px;
-  font-weight: 700;
-}
-
-/* Gaya Tulisan Konten */
-.quran-text-jawa {
-  font-family: "Scheherazade New", serif;
-  font-size: 1.5rem;
-  color: #000000;
-  line-height: 1.5;
-  direction: ltr;
-  text-align: justify;
-}
-
-.quran-text {
-  font-size: 0.95rem;
-  color: #374151;
-  line-height: 1.5;
-}
-
-.quran-text-pembahasan {
-  font-size: 1.5rem;
-  color: #000000;
-  line-height: 1.6;
-  text-align: justify;
-direction: ltr;
-
-}
-
-.quran-badge {
- display: contents;
-  background: #e8f5e9;
-  padding: 4px 12px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
-}
 /* Header Kata Arab */
 #popHarakat {
   font-family: "Scheherazade New", serif;
@@ -825,9 +403,9 @@ direction: ltr;
   color: #000000;
 }
 
-/* Garis bawah hijau khas Quran.com saat aktif */
+/* Aksen Marun saat aktif */
 .tab-btn.active {
-  color: #000000; 
+  color: #000000;
 }
 
 .tab-btn.active::after {
@@ -837,10 +415,10 @@ direction: ltr;
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #8B1E4F;
+  background-color: #8b1e4f;
 }
 
-/* Container & Area Scroll Konten Tab */
+/* Area Scroll Isi Konten Tab */
 .quran-tab-container {
   overflow-y: auto;
   flex-grow: 1;
@@ -856,15 +434,16 @@ direction: ltr;
   border-radius: 4px;
 }
 
-/* Menyembunyikan Tab yang tidak aktif */
+/* Sembunyikan/Tampilkan Konten Tab */
 .tab-content {
   display: none;
 }
+
 .tab-content.active {
   display: block;
 }
 
-/* Komponen Card di Dalam Tab */
+/* Kotak Informasi di Dalam Tab */
 .quran-card {
   background: #f9fafb;
   border: 1px solid #f3f4f6;
@@ -883,180 +462,169 @@ direction: ltr;
   font-weight: 700;
 }
 
-/* Tipografi Konten */
+/* Gaya Tulisan Konten di Popup */
+.quran-text-jawa {
+  font-family: "Scheherazade New", serif;
+  font-size: 16px !important;
+  color: #000000;
+  line-height: 1.5;
+  direction: ltr;
+  text-align: justify;
+}
 
+/* Mengatur font dan kerapian teks analisis nahwu di dalam pop-up */
+.quran-text-nahwu {
+  font-size: 16px !important;
+  color: #374151; /* Warna abu-abu gelap khas teks modern */
+  line-height: 1.6;
+  text-align: justify;
+  direction: ltr; /* Mengikuti pembacaan Indonesia dari kiri ke kanan */
+}
 
 .quran-text {
-  font-size: 0.95rem;
+  font-size: 16px !important;
   color: #374151;
   line-height: 1.5;
 }
 
-
+.quran-text-pembahasan {
+  font-size: 16px !important;
+  color: #000000;
+  line-height: 1.6;
+  text-align: justify;
+  direction: ltr;
+}
 
 /* Badge untuk kode I'rob */
 .quran-badge {
-
+  display: inline-block;
   background: #e8f5e9;
   color: #000000;
- 
-  
+  padding: 4px 12px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 1rem;
 }
 
-#popJawa,
-#popTasrif,
-#popPembahasan {
-  font-size: 16px !important;
+/* ==========================================================================
+   7. SIDEBAR (DAFTAR ISI KITAB)
+   ========================================================================== */
+.sidebar {
+  grid-area: sidebar;
+  background: #ffffff;
+  border: 1px solid #d7d7d7;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
-/* untuk handphone */
-@media (max-width: 768px) {
+.sidebar-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #d7d7d7;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "Scheherazade New", serif;
+}
 
+.sidebar-title {
+  text-align: center;
+}
+
+/* Mengatur warna semua link di dalam sidebar */
+.sidebar ul li a {
+  color: #000000; /* Mengubah warna menjadi hitam, silakan ganti kode hex jika ingin warna lain */
+  text-decoration: none; /* Opsional: Menghilangkan garis bawah pada link agar lebih rapi */
+}
+
+/* Memastikan warna tidak berubah menjadi ungu setelah diklik */
+.sidebar ul li a:visited {
+  color: #000000;
+}
+
+/* Opsional: Efek warna saat teks link disentuh kursor (hover) */
+.sidebar ul li a:hover {
+  color: #d81b60; /* Berubah menjadi warna merah maroon/magenta khas tema Anda */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+.sidebar li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ececec;
+  font-size: 1.3rem;
+  cursor: pointer;
+  font-family: "Scheherazade New", serif;
+}
+
+.sidebar li:hover {
+  background: #f8f8f8;
+}
+
+#toggleSidebar {
+  position: absolute;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* fungsionalitas hide sidebar desktop */
+.wrapper.hide-sidebar {
+  grid-template-columns: 1fr 60px;
+}
+
+.wrapper.hide-sidebar .sidebar {
+  width: 60px;
+}
+
+.wrapper.hide-sidebar .sidebar ul,
+.wrapper.hide-sidebar .sidebar-title {
+  display: none;
+}
+
+.wrapper.hide-sidebar .sidebar-header {
+  justify-content: center;
+}
+
+/* ==========================================================================
+   8. FOOTER
+   ========================================================================== */
+.footer {
+  grid-area: footer;
+  background: #fefefe;
+  border: 1px solid #d7d7d7;
+  padding: 15px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   9. RESPONSIVE MEDIA QUERIES (MOBILE LABELS)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Reset dasar layout di HP */
   body {
-    padding: 8px;
+    margin: 0;
+    padding: 0;
+    background: #fff;
   }
 
   .wrapper {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "header"
-      "main"
-      "sidebar"
-      "footer";
-  }
-
-  .header {
-    height: auto;
-    padding: 15px;
-  }
-
-  .arab-ltr {
-    font-size: 1.1rem;
-    line-height: 1.8;
-  }
-
-  .main-content {
-    padding: 15px;
-  }
-
-  .kitab h1 {
-    font-size: 2rem;
-  }
-
-  .kata {
-    font-size: 1.5rem;
-    line-height: 2.2;
-  }
-
-  .sidebar {
-    margin-top: 10px;
-  }
-
-  .apple-popup {
-    position: fixed !important;
-    left: 10px !important;
-    right: 10px !important;
-    bottom: 10px !important;
-    top: auto !important;
-
-    width: auto !important;
-    max-height: 65vh;
-
-    border-radius: 20px;
-  }
-
-  #popHarakat {
-    font-size: 2rem;
-  }
-
-  .quran-tab-container {
-    overflow-y: auto;
-  }
-}
-
-/* pengaturan ukuran */
-/* ==========================
-   MOBILE
-   ========================== */
-@media (max-width: 768px) {
-
-  /* Tombol I'rob & Harakat */
-  .sticky-irob-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:10px;
-  }
-
-  #toggleIrob,
-  #toggleHarakatMain{
-    font-size:12px;
-    padding:5px 10px;
-  }
-
-  /* Judul bab */
-  .kitab h1{
-    font-size:2rem;
-  }
-
-  /* Teks kitab */
-  .kata{
-    font-size:1rem;
-    line-height:2;
-    margin-top:10px;
-  }
-
-  /* I'rob kecil */
-  .kata::before{
-    font-size:0.6rem;
-    top:-12px;
-  }
-
-  /* Saat harakat + irob aktif */
-  .kitab.show-harakat-main.show-irob .kata::before{
-    top:-24px;
-  }
-
-  /* Matan atas */
-  .arab-ltr{
-    font-size:1.1rem;
-    line-height:1.8;
-  }
-
-  /* Popup */
-  #popHarakat{
-    font-size:1.8rem;
-  }
-
-  .tab-btn{
-    font-size:0.75rem;
-  }
-
-  #popJawa,
-  #popTasrif,
-  #popPembahasan{
-    font-size:14px !important;
-  }
-}
-
-/* hilangkan bacground di hp */
-@media (max-width: 768px) {
-
-  body{
-    margin:0;
-    padding:0;
-    background:#fff;
-  }
-
-  .wrapper{
-    width:100%;
-    max-width:none;
-    margin:0;
-    gap:0;
-
-    grid-template-columns:1fr;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    gap: 0;
+    grid-template-columns: 1fr 0; /* Sembunyikan sidebar dari grid utama */
     grid-template-areas:
       "header"
       "main"
@@ -1067,204 +635,131 @@ direction: ltr;
   .header,
   .main-content,
   .sidebar,
-  .footer{
-    border-radius:0;
+  .footer {
+    border-radius: 0;
   }
 
-  .main-content{
-    padding:12px;
-  }
-}
-
-/* sidebar di hp biar aman */
-@media (max-width:768px){
-
-  .sidebar-header{
-    font-size:1rem;
-    padding:10px;
+  /* Header & Matan Atas */
+  .header {
+    height: auto;
+    padding: 15px;
   }
 
-  .sidebar li{
-    font-size:1rem;
-    padding:10px 15px;
+  .arab-ltr {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    padding-top: 60px;
   }
 
-}
-
-/* sidebar responsif */
-@media (max-width:768px){
-
-  body{
-    margin:0;
-    padding:0;
-    background:#fff;
+  /* Main Content */
+  .main-content {
+    padding: 12px;
   }
 
-  .wrapper{
-    width:100%;
-    max-width:none;
-    margin:0;
-    gap:0;
-
-    /* sidebar disembunyikan */
-    grid-template-columns: 1fr 0;
+  .kitab h1 {
+    font-size: 2rem;
   }
 
-  .main-content{
-    padding:12px;
+  /* Kontrol sticky i'rob & harakat */
+  .sticky-irob-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
   }
 
-  .sidebar{
-    position:fixed;
-    top:0;
-    right:-280px; /* sembunyi di luar layar */
-    width:280px;
-    height:100vh;
-
-    background:#fff;
-
-    z-index:99999;
-
-    transition:right .3s ease;
-
-    box-shadow:-5px 0 20px rgba(0,0,0,.15);
+  #toggleIrob,
+  #toggleHarakatMain {
+    font-size: 12px;
+    padding: 5px 10px;
   }
 
-  /* saat sidebar dibuka */
-  .wrapper.mobile-sidebar-open .sidebar{
-    right:0;
+  /* Ukuran text kitab & i'rab di HP */
+  .kata {
+    font-size: 1rem;
+    line-height: 2;
+    margin-top: 10px;
   }
 
-  .header,
-  .main-content,
-  .footer{
-    border-radius:0;
-  }
-}
-
-/* tombol sidebar mengambang */
-@media (max-width:768px){
-
-  #toggleSidebar{
-    position:fixed;
-    top:15px;
-    left:15px;
-
-    z-index:100000;
-
-    width:42px;
-    height:42px;
-
-    border:none;
-    border-radius:10px;
-
-    background:#fff;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.15);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:22px;
+  .kata::before {
+    font-size: 0.6rem;
+    top: -12px;
   }
 
-}
-
-/* css sidebar menjadi */
-@media (max-width:768px){
-
-  .sidebar{
-    position:fixed;
-    top:0;
-    right:-280px;
-
-    width:280px;
-    height:100vh;
-
-    background:#fff;
-
-    transition:right .3s ease;
-    z-index:99999;
+  .kitab.show-harakat-main.show-irob .kata::before {
+    top: -24px;
   }
 
-  .wrapper.mobile-sidebar-open .sidebar{
-    right:0;
+  /* Kontrol Khusus Sidebar Melayang (Floating) di HP */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px; /* sembunyi di luar layar */
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    z-index: 99999;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
   }
 
-}
-
-/* float */
-@media (max-width:768px){
-
-  #toggleSidebar{
-    position:fixed;
-
-    bottom:80px;
-    right:15px;
-
-    width:52px;
-    height:52px;
-
-    border:none;
-    border-radius:50%;
-
-    background:#6b4f1d;
-    color:white;
-
-    z-index:100000;
-
-    box-shadow:0 4px 15px rgba(0,0,0,.25);
-
-    font-size:24px;
+  .wrapper.mobile-sidebar-open .sidebar {
+    right: 0;
   }
 
-}
-
-@media (max-width:768px){
-
-  #toggleSidebar{
-    position:fixed !important;
-
-    top:auto !important;
-    left:auto !important;
-
-    bottom:20px !important;
-    right:15px !important;
-
-    width:52px !important;
-    height:52px !important;
-
-    border-radius:50% !important;
-
-    z-index:999999 !important;
+  .sidebar-header {
+    font-size: 1rem;
+    padding: 10px;
   }
 
-}
-
-/* harokat */
-@media (max-width:768px){
-
-  .arab-ltr{
-    padding-top:60px;
+  .sidebar li {
+    font-size: 1rem;
+    padding: 10px 15px;
   }
 
-}
+  /* Tombol Menu Sidebar Mengambang di HP */
+  #toggleSidebar {
+    position: fixed !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: 20px !important;
+    right: 15px !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    background: #6b4f1d;
+    color: white;
+    z-index: 999999 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
 
-/* perbaikan tombol harokat matan */
-#toggleHarakat {
-  background: #ffffff;
-  color: #000000;
-}
+  /* Apple Popup Berubah Jadi Bottom Sheet di HP */
+  .apple-popup {
+    position: fixed !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    top: auto !important;
+    width: auto !important;
+    max-height: 65vh;
+    border-radius: 20px;
+  }
 
-#toggleHarakat.active {
-  background: #8B1E4F;
-  color: #ffffff;
-}
+  #popHarakat {
+    font-size: 1.8rem;
+  }
 
-@media (hover: hover) {
-  #toggleHarakat:hover {
-    background: #8B1E4F;
-    color: #ffffff;
+  .tab-btn {
+    font-size: 0.75rem;
+  }
+
+  #popJawa,
+  #popTasrif,
+  #popPembahasan {
+    font-size: 14px !important;
   }
 }

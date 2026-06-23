@@ -12,18 +12,21 @@
       href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    
   </head>
   <body>
     <div class="wrapper">
       <header class="header">
-        <button id="toggleHarakat">حر</button>
-
-        <p class="arab-ltr" id="matan">
+        <p
+          class="arab-ltr"
+          id="matan"
+          data-harakat="(فَصْلٌ) وَمَنْ غَصَبَ مَالًا لِأَحَدٍ لَزِمَهُ رَدُّهُ وَأَرْشُ نَقْصِهِ وَأُجْرَةُ مِثْلِهِ فَإِنْ تَلَفَ ضَمِنَهُ بِمِثْلِهِ إِنْ كَانَ لَهُ مِثْلٌ أَوْ بِقِيمَتِهِ إِنْ لَمْ يَكُنْ لَهُ مِثْلٌ أَكْثَرَ مَا كَانَتْ مِنْ يَوْمِ الْغَصْبِ إِلَى يَوْمِ التَّلَفِ."
+        >
           (فصل) ومن غصب مالا لأحد لزمه رده وأرش نقصه وأجرة مثله فإن تلف ضمنه
           بمثله إن كان له مثل أو بقيمته إن لم يكن له مثل أكثر ما كانت من يوم
           الغصب إلى يوم التلف.
         </p>
+
+        <button id="toggleHarakat">حر</button>
       </header>
 
       <main class="main-content">
@@ -299,6 +302,7 @@
               >بعقد.</span
             >
           </p>
+          <br />
           <p>
             <span
               class="kata matan"
@@ -548,23 +552,24 @@
               >).</span
             >
           </p>
-        
-
-
+          <br />
 
           <div class="apple-popup" id="commentaryPanel">
             <button id="closePanel">✕</button>
-            
+
             <h2 id="popHarakat">-</h2>
 
             <div class="quran-tabs">
               <button class="tab-btn active" data-tab="tab-arti">Arti</button>
-              <button class="tab-btn" data-tab="tab-irob">I'rob & Sharaf</button>
-              <button class="tab-btn" data-tab="tab-pembahasan">Pembahasan</button>
+              <button class="tab-btn" data-tab="tab-irob">
+                I'rob & Sharaf
+              </button>
+              <button class="tab-btn" data-tab="tab-pembahasan">
+                Pembahasan
+              </button>
             </div>
 
             <div class="quran-tab-container">
-              
               <div class="tab-content active" id="tab-arti">
                 <div class="quran-card">
                   <span class="quran-label"></span>
@@ -574,8 +579,8 @@
 
               <div class="tab-content" id="tab-irob">
                 <div class="quran-card">
-                  <span class="quran-label">Kode Kedudukan (I'rob)</span>
-                  <div class="quran-badge" id="popIrob">-</div>
+                  <span class="quran-label">Analisis Nahwu</span>
+                  <p id="popNahwu" class="quran-text-nahwu">-</p>
                 </div>
                 <div class="quran-card">
                   <span class="quran-label">Analisis Sharaf / Tasrif</span>
@@ -589,7 +594,6 @@
                   <p id="popPembahasan" class="quran-text-pembahasan">-</p>
                 </div>
               </div>
-
             </div>
           </div>
         </article>
@@ -601,11 +605,10 @@
 
           <button id="toggleSidebar">☰</button>
         </div>
-      <ul>
-          
+        <ul>
           <li><a href="">المقدمة</a></li>
           <li><a href="index.html">الغصب</a></li>
-          <li>الشُّفْعة</li>
+          <li><a href="Syuf'ah.html">الشُّفْعة</a></li>
           <li><a href="Qirath.html">القراض</a></li>
           <li>المساقاة</li>
           <li>الإِجارة</li>

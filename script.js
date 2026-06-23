@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const irob = this.getAttribute("data-irob") || "-";
 
       // DIBAWAH INI PERBAIKAN ERROR: Dari 'element.getAttribute' diubah menjadi 'this.getAttribute'
-      const nahwuData = this.getAttribute("data-pembahasan") || "-";
+      const nahwuData = this.getAttribute("data-nahwu") || "-";
 
       const tasrif = this.getAttribute("data-tasrif") || "-";
       const pembahasan = this.getAttribute("data-pembahasan") || "-";

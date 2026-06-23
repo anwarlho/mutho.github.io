@@ -59,9 +59,22 @@ body {
   text-align: right;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Agar header selalu berada di lapisan paling atas dan tidak tertutup teks kitab */
+  background-color: #ffffff; /* Berikan warna latar belakang padat agar teks syarah di bawahnya tidak tembus pandang */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Opsional: memberikan sedikit bayangan agar terlihat terpisah dari konten */
+  
+  /* ... kode margin, padding, atau font yang sudah ada di file Anda tetap biarkan ... */
+}
+
 .header h1 {
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   font-weight: 800;
+}
+.judul-bab {
+  scroll-margin-top: 200px; /* Memberikan ruang udara/jarak di atas judul setelah di-scroll */
 }
 
 .header p {
@@ -139,6 +152,18 @@ body {
      - main menggunakan Flexbox untuk mengatur konten kecil (Mikro) yang ada di dalamnya (1 Dimensi). */
 }
 
+/* Membuat panel kontrol menempel saat di-scroll */
+.sticky-controls {
+  position: -webkit-sticky; /* Dukungan untuk browser Safari lawas */
+  position: sticky;
+  top: 0;                   /* Menempel pas di batas atas layar */
+  background-color: #efefef; /* Samakan dengan warna background body agar teks di bawahnya tidak tembus pandang saat digulung */
+  padding: 10px 0;          /* Jarak atas bawah agar terlihat rapi */
+  z-index: 999;             /* Memastikan tombol berada di atas teks matan saat di-scroll */
+  display: flex;
+  gap: 10px;                /* Jarak antar tombol jika ada lebih dari satu */
+  border-bottom: 1px solid #ddd; /* Opsional: memberi batas tipis saat melayang */
+}
 .kitab {
   direction: rtl;
   text-align: right;
@@ -201,13 +226,79 @@ body {
    5. STICKY INTERACTIVE CONTROLS (I'ROB & HARAKAT MAIN)
    ========================================================================== */
 .sticky-irob-container {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 10px;
-  z-index: 100;
+  position: fixed;   /* Mengunci posisi agar melayang mengikuti layar */
+  bottom: 20px;       /* Jarak dari batas bawah layar */
+  left: 20px;        /* Jarak dari batas kiri layar (taruh kiri agar tidak menabrak tombol sidebar di kanan) */
+  z-index: 99999;    /* Angka sangat besar agar selalu berada di lapisan paling atas */
+  
+  /* Gaya tambahan agar tombol rapi dalam satu kotak */
   display: flex;
-  justify-content: flex-start; /* Tombol merapat ke kiri kertas (tidak menabrak teks Arab) */
-  margin-bottom: -30px;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.9); /* Warna putih semi transparan */
+  padding: 10px;
+  border-radius: 30px; /* Membuat sudut kotak melengkung halus (capsule) */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Memberikan efek bayangan lembut agar terlihat timbul */
+}
+
+/* Opsional: Membuat tombol di dalamnya berbentuk bulat lingkaran yang serasi */
+.sticky-irob-container {
+  position: fixed;   
+  bottom: 15px;       /* Sedikit lebih turun ke bawah */
+  left: 15px;        /* Sedikit lebih mepet ke kiri */
+  z-index: 99999;    
+  
+  display: flex;
+  gap: 6px;           /* Jarak antar tombol dipersempit */
+  background-color: rgba(255, 255, 255, 0.85); /* Lebih transparan halus */
+  padding: 6px;       /* Lapisan luar diperkecil */
+  border-radius: 20px; /* Lengkungan disesuaikan dengan ukuran baru */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
+}
+
+/* Ukuran tombol di dalamnya diperkecil */
+.sticky-irob-container {
+  position: fixed;   
+  bottom: 15px;       
+  
+  /* RUMUS ESTETIK: Mengunci posisi kiri agar sejajar dengan kontainer bagian dalam */
+  left: calc(50% - 600px + 20px); 
+  
+  z-index: 99999;    
+  display: flex;
+  gap: 6px;           
+  background-color: rgba(255, 255, 255, 0.85); 
+  padding: 6px;       
+  border-radius: 20px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
+}
+
+/* RESPONSIVE: Saat layar lebih kecil dari 1200px (seperti di HP/Tablet), otomatis kembali mepet ke kiri biasa agar tidak hilang dari layar */
+@media (max-width: 1240px) {
+  .sticky-irob-container {
+    left: 15px;
+  }
+}
+
+/* Ukuran tombol di dalamnya (tetap kecil dan imut) */
+.sticky-irob-container button {
+  width: 32px;        
+  height: 32px;       
+  border-radius: 50%;
+  border: none;
+  background-color: #6b4f1d; 
+  color: white;
+  font-size: 11px;    
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: transform 0.1s ease;
+}
+
+.sticky-irob-container button:active {
+  transform: scale(0.9); 
 }
 
 /* Tombol I'rob */
@@ -510,12 +601,25 @@ body {
    7. SIDEBAR (DAFTAR ISI KITAB)
    ========================================================================== */
 .sidebar {
-  grid-area: sidebar;
-  background: #ffffff;
-  border: 1px solid #d7d7d7;
-  width: 100%;
-  transition: all 0.3s ease;
+  /* Membuat sidebar melayang mengikuti scroll */
+  position: -webkit-sticky;
+  position: sticky;
+  
+  /* Atur jarak dari atas layar. 
+     Sesuaikan nilai ini agar pas berada tepat di bawah batas bawah header kamu */
+  top: 200px; 
+  
+  /* Membatasi tinggi maksimum sidebar agar jika menunya panjang, 
+     dia bisa di-scroll sendiri di dalam area sidebar dan tidak terpotong ke bawah layar */
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  
+  /* (Opsional) Jika sidebar kamu belum memiliki background, berikan agar teks di belakangnya tidak tembus */
+  background-color: #fff; 
+  
+  /* Properti padding/margin bawaan kamu tetap biarkan di bawahnya */
 }
+
 
 .sidebar-header {
   position: relative;
@@ -727,7 +831,7 @@ body {
     width: 52px !important;
     height: 52px !important;
     border-radius: 50% !important;
-    background: #6b4f1d;
+    background: #d81b60;
     color: white;
     z-index: 999999 !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);

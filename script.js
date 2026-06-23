@@ -7,17 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleSidebar = document.getElementById("toggleSidebar");
   const wrapper = document.querySelector(".wrapper");
 
-  // Variabel bantuan untuk menyimpan status harakat global
-  let tampilHarakat = false; 
-
   if (matan && tombol) {
-    // Tombol diubah agar mengambil data dinamis yang sedang aktif saat diklik
+    const tanpaHarakat = matan.innerText.trim();
+    const denganHarakat = matan.getAttribute("data-harakat");
+    let tampilHarakat = false;
+
     tombol.addEventListener("click", function () {
       tampilHarakat = !tampilHarakat;
-      
-      const denganHarakat = matan.getAttribute("data-harakat") || "";
-      const tanpaHarakat = matan.getAttribute("data-tanpa-harakat") || "";
-
       matan.innerText = tampilHarakat ? denganHarakat : tanpaHarakat;
 
       if (tampilHarakat) {
@@ -48,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const popHarakat = document.getElementById("popHarakat");
   const popJawa = document.getElementById("popJawa");
   const popIrob = document.getElementById("popIrob");
-  const popNahwu = document.getElementById("popNahwu"); 
+  const popNahwu = document.getElementById("popNahwu"); // <-- BARU: mendaftarkan id popNahwu
   const popTasrif = document.getElementById("popTasrif");
   const popPembahasan = document.getElementById("popPembahasan");
 
@@ -74,17 +70,22 @@ document.addEventListener("DOMContentLoaded", () => {
       semuaKata.forEach((k) => k.classList.remove("active"));
       this.classList.add("active");
 
+      // Mengambil data dari atribut HTML kata yang diklik
       const harakat = this.getAttribute("data-harakat") || "-";
       const jawa = this.getAttribute("data-jawa") || "-";
       const irob = this.getAttribute("data-irob") || "-";
+
+      // DIBAWAH INI PERBAIKAN ERROR: Dari 'element.getAttribute' diubah menjadi 'this.getAttribute'
       const nahwuData = this.getAttribute("data-nahwu") || "-";
+
       const tasrif = this.getAttribute("data-tasrif") || "-";
       const pembahasan = this.getAttribute("data-pembahasan") || "-";
 
+      // Memasukkan data ke dalam elemen pop-up
       if (popHarakat) popHarakat.textContent = harakat;
       if (popJawa) popJawa.innerHTML = `&lrm;${jawa}&lrm;`;
       if (popIrob) popIrob.textContent = irob;
-      if (popNahwu) popNahwu.textContent = nahwuData; 
+      if (popNahwu) popNahwu.textContent = nahwuData; // <-- BARU: menampilkan data nahwu ke pop-up
       if (popTasrif) popTasrif.textContent = tasrif;
       if (popPembahasan) popPembahasan.textContent = pembahasan;
 
@@ -143,7 +144,16 @@ document.addEventListener("DOMContentLoaded", () => {
       semuaKata.forEach((k) => k.classList.remove("active"));
     }
   });
+// --- BARU: LOGIKA SEMBUNYIKAN / TAMPILKAN HEADER ---
+  const toggleHeaderBtn = document.getElementById("toggleHeader");
 
+  if (toggleHeaderBtn && wrapper) {
+    toggleHeaderBtn.addEventListener("click", function (e) {
+      e.stopPropagation(); // Mencegah bentrokan event click lain
+      wrapper.classList.toggle("header-hidden"); // Sesuai dengan class CSS Anda
+      this.classList.toggle("active"); // Untuk efek visual tombol aktif
+    });
+  }
   // ==========================================================================
   // 3. FITUR TOGGLE VIEW (IROB DI ATAS KATA & HARAKAT UTAMA)
   // ==========================================================================
@@ -167,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Tombol tutup otomatis sidebar untuk tampilan Mobile
   document.addEventListener("click", function (e) {
     if (window.innerWidth > 768) return;
 
@@ -180,45 +191,4 @@ document.addEventListener("DOMContentLoaded", () => {
       wrapper.classList.remove("mobile-sidebar-open");
     }
   });
-
-  // ==========================================================================
-  // 4. BARU: DETEKSI SCROLL UTK MODIFIKASI MATAN HEADER SECARA DINAMIS
-  // ==========================================================================
-  const semuaJudulBab = document.querySelectorAll(".judul-bab");
-
-  if (matan && semuaJudulBab.length > 0) {
-    // Daftarkan teks bawaan index.html sebagai cadangan awal bab ghasab
-    if (!matan.getAttribute("data-tanpa-harakat")) {
-      matan.setAttribute("data-tanpa-harakat", matan.innerText.trim());
-    }
-
-    const opsiObserver = {
-      root: null,
-      rootMargin: "-15% 0px -70% 0px", // Deteksi sensitif area atas layar
-      threshold: 0
-    };
-
-    const babObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const matanBerharakat = entry.target.getAttribute("data-matan-full");
-          
-          if (matanBerharakat) {
-            // Hilangkan harakat secara instan untuk versi gundulnya
-            // Menghapus karakter Unicode Harakat (Fathah, Kasrah, Dhammad, Sukun, dll)
-            const matanTanpaHarakat = matanBerharakat.replace(/[\u064B-\u0652\u0671]/g, "");
-
-            // Perbarui bank data sementara pada elemen #matan
-            matan.setAttribute("data-harakat", matanBerharakat);
-            matan.setAttribute("data-tanpa-harakat", matanTanpaHarakat);
-
-            // Sesuaikan teks tampilan mengikuti kondisi tombol active saat ini
-            matan.innerText = tampilHarakat ? matanBerharakat : matanTanpaHarakat;
-          }
-        }
-      });
-    }, opsiObserver);
-
-    semuaJudulBab.forEach(judul => babObserver.observe(judul));
-  }
 });

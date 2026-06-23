@@ -60,6 +60,36 @@ body {
 
 }
 
+/* 1. Berikan efek transisi halus pada header bawaanmu */
+.header {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  transform-origin: top;
+}
+
+/* 2. Kondisi ketika header disembunyikan */
+.header-hidden .header {
+  transform: translateY(-100%); /* Geser header ke atas keluar layar */
+  opacity: 0;                   /* Buat transparan */
+  pointer-events: none;         /* Menghindari tombol di dalam header tidak sengaja diklik */
+}
+
+/* 3. Ketika header hilang, majukan jarak konten utama ke atas */
+.header-hidden .main-content,
+.header-hidden .sidebar {
+  top: 20px !important; /* Geser batas atas layout karena header sudah tidak ada */
+  transition: top 0.3s ease;
+}
+
+/* 4. Sesuaikan juga scroll jangkar judul bab saat header sembunyi */
+.header-hidden .judul-bab {
+  scroll-margin-top: 40px !important; /* Jarak pas saat header sembunyi */
+}
+
+/* 5. Opsional: Beri warna pembeda saat tombol hide header aktif */
+#toggleHeader.active {
+  background-color: #333 !important;
+  color: #fff;
+}
 
 .header {
   position: sticky;
@@ -70,6 +100,8 @@ body {
   
   /* ... kode margin, padding, atau font yang sudah ada di file Anda tetap biarkan ... */
 }
+
+
 
 .header h1 {
   font-size: 0.5rem;
@@ -287,8 +319,8 @@ body {
   height: 32px;       
   border-radius: 50%;
   border: none;
-  background-color: #6b4f1d; 
-  color: white;
+  background-color: #ffffff; 
+  color: rgb(0, 0, 0);
   font-size: 11px;    
   font-weight: bold;
   cursor: pointer;

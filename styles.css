@@ -609,7 +609,7 @@ body {
   
   /* Atur jarak dari atas layar. 
      Sesuaikan nilai ini agar pas berada tepat di bawah batas bawah header kamu */
-  top: 200px; 
+  top: 185px; 
   
   /* Membatasi tinggi maksimum sidebar agar jika menunya panjang, 
      dia bisa di-scroll sendiri di dalam area sidebar dan tidak terpotong ke bawah layar */
@@ -780,6 +780,11 @@ body {
     padding: 5px 10px;
   }
 
+
+  .header p {
+    font-size: 1.1rem; /* <--- INI PENYEBABNYA! Di HP masih terkunci 2rem (Gede) */
+    text-align: right;
+  }
   /* Ukuran text kitab & i'rab di HP */
   .kata {
     font-size: 1rem;

@@ -739,14 +739,15 @@ body {
 
   /* Apple Popup Berubah Jadi Bottom Sheet di HP */
   .apple-popup {
-    position: fixed !important;
-    left: 10px !important;
-    right: 10px !important;
-    bottom: 10px !important;
+    position: fixed !important; /* Wajib fixed agar menempel di layar HP */
+    bottom: 0 !important;
     top: auto !important;
-    width: auto !important;
-    max-height: 65vh;
-    border-radius: 20px;
+    left: 0 !important;
+    width: 100% !important;
+    max-height: 50vh; /* Membatasi tinggi setengah layar HP */
+    border-radius: 16px 16px 0 0; /* Melengkung di atas saja */
+    z-index: 100000; /* Pastikan di atas sidebar mobile */
+  }
   }
 
   #popHarakat {

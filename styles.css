@@ -57,7 +57,9 @@ body {
   min-height: 180px;
   height: auto;
   text-align: right;
+
 }
+
 
 .header {
   position: sticky;
@@ -78,14 +80,14 @@ body {
 }
 
 .header p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .arab-ltr {
   direction: rtl;
   text-align: right;
   font-family: "Scheherazade New", serif;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   line-height: 1.8;
   padding-top: 30px; /* Ruang agar tidak tertimpa tombol */
 }
@@ -750,7 +752,7 @@ body {
   }
 
   .arab-ltr {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     line-height: 1.8;
     padding-top: 60px;
   }

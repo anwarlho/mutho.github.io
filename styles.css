@@ -17,31 +17,21 @@ body {
    2. LAYOUT (GRID SYSTEM)
    ========================================================================== */
 .wrapper {
-  /* wrapper adalah salah satu nama class yang paling sering digunakan di dunia. 
-     Fungsinya adalah sebagai kotak utama yang membungkus elemen-elemen lain di dalam halaman web 
-     agar tampilannya rapi, konsisten, dan berada di tengah layar.
-     Tanpa pembungkus, konten website kamu akan melar dari ujung kiri sampai ujung kanan layar 
-     (terutama pada monitor komputer yang lebar), sehingga sangat tidak nyaman dibaca.
-     Nama Alternatif Lainnya : .container, .pembungkus, .main-container */
-  max-width: 1200px;
-  margin: 40px auto;
   display: grid;
-  grid-template-columns: 3fr 1fr; /* Membagi jadi 2 kolom: 75% dan 25% */
-
-  /* Ketika kamu menulis 3fr 1fr, kamu memberi tahu browser untuk:
-     Menjumlahkan total pecahan: 3 + 1 = 4 bagian.
-     Membagi total lebar ruang menjadi 4 bagian yang sama besar.
-     Memberikan 3 bagian untuk kolom pertama.
-     Memberikan 1 bagian untuk kolom kedua.
-     Artinya, kolom pertama akan selalu berukuran 3 kali lebih besar daripada kolom kedua, 
-     sekecil atau sebesar apa pun layar yang digunakan pengguna (sangat responsif). */
-  grid-template-areas:
-    "header header" /* Baris 1: Kolom pertama & kedua diisi oleh header */
-    "main sidebar" /* Baris 2: Kolom pertama diisi main, kolom kedua diisi sidebar */
-    "footer footer"; /* Baris 3: Kolom pertama & kedua diisi oleh footer */
-  gap: 10px;
+  grid-template-columns: 7.5fr 2.5fr; /* Rasio kolom yang ideal */
+  grid-template-rows: auto auto auto;
+  grid-template-areas: 
+    "header header"
+    "main sidebar"
+    "footer sidebar";
+  
+  /* MERAPATKAN GAP: Diubah ke 12px agar jarak kotak sangat tipis */
+  gap: 0px; 
+  
+  max-width: 1250px; 
+  margin: 15px auto; 
+  padding: 0 15px;   
 }
-
 /* ==========================================================================
    3. HEADER & MATAN ATAS
    ========================================================================== */
@@ -57,20 +47,31 @@ body {
   min-height: 180px;
   height: auto;
   text-align: right;
+}
 
+.header {
+  grid-column: span 2; /* Mengharuskan header memenuhi kedua kolom */
+  position: sticky;    /* MENGUBAH JADI STICKY: Mengikuti scroll */
+  top: 0;              /* Menempel tepat di batas paling atas */
+  z-index: 1000;       /* Memastikan berada di lapisan paling depan saat di-scroll */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Menggunakan shadow tebal Anda */
+  transition: transform 0.3s ease, cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* 1. Berikan efek transisi halus pada header bawaanmu */
 .header {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
   transform-origin: top;
 }
 
 /* 2. Kondisi ketika header disembunyikan */
 .header-hidden .header {
   transform: translateY(-100%); /* Geser header ke atas keluar layar */
-  opacity: 0;                   /* Buat transparan */
-  pointer-events: none;         /* Menghindari tombol di dalam header tidak sengaja diklik */
+  opacity: 0; /* Buat transparan */
+  pointer-events: none; /* Menghindari tombol di dalam header tidak sengaja diklik */
 }
 
 /* 3. Ketika header hilang, majukan jarak konten utama ke atas */
@@ -80,6 +81,10 @@ body {
   transition: top 0.3s ease;
 }
 
+/* MENYESUAIKAN KONTEN UTAMA AGAR TETAP STABIL */
+.main-content, .sidebar {
+  margin-top: 0px; /* Memberi jarak aman di bawah sticky header */
+}
 /* 4. Sesuaikan juga scroll jangkar judul bab saat header sembunyi */
 .header-hidden .judul-bab {
   scroll-margin-top: 40px !important; /* Jarak pas saat header sembunyi */
@@ -96,12 +101,10 @@ body {
   top: 0;
   z-index: 1000; /* Agar header selalu berada di lapisan paling atas dan tidak tertutup teks kitab */
   background-color: #ffffff; /* Berikan warna latar belakang padat agar teks syarah di bawahnya tidak tembus pandang */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Opsional: memberikan sedikit bayangan agar terlihat terpisah dari konten */
-  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Opsional: memberikan sedikit bayangan agar terlihat terpisah dari konten */
+
   /* ... kode margin, padding, atau font yang sudah ada di file Anda tetap biarkan ... */
 }
-
-
 
 .header h1 {
   font-size: 0.5rem;
@@ -122,6 +125,7 @@ body {
   font-size: 0.8rem;
   line-height: 1.8;
   padding-top: 30px; /* Ruang agar tidak tertimpa tombol */
+  /* font-weight: bold; */
 }
 
 /* Tombol Perubahan Harakat di Header */
@@ -131,7 +135,7 @@ body {
   right: 10px; /* di kanan karena teks arab */
   background: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
+  /* border: 1px solid #000000; */
   border-radius: 15px;
   padding: 5px 10px;
   font-size: 0.8rem;
@@ -139,12 +143,9 @@ body {
   transition: 0.3s;
   margin-right: 10px;
   margin-top: 10px;
+ font-weight: bold;
 }
 
-#toggleHarakat.active {
-  background: #8b1e4f;
-  color: #ffffff;
-}
 
 #toggleHarakat:hover {
   background: #ededed;
@@ -152,7 +153,7 @@ body {
 
 @media (hover: hover) {
   #toggleHarakat:hover {
-    background: #8b1e4f;
+    background: #000000;
     color: #ffffff;
   }
 }
@@ -161,14 +162,12 @@ body {
    4. MAIN CONTENT & TEXT KITAB
    ========================================================================== */
 .main-content {
-  grid-area: main;
-  min-height: 900px;
-  border: 1px solid #d7d7d7;
+ grid-area: main;
   background: #ffffff;
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  border: 1px solid #e0e0e0; /* Border tipis abu-abu bersih */
+  border-radius: 8px;       /* Lekukan sudut yang pas */
+  padding: 30px;            /* Jarak dalam kotak */
+  box-shadow: none;         /* Di Turath jarang menggunakan shadow tebal */
   direction: rtl; /* penanda tombol i'rob */
   font-family: "Scheherazade New", serif;
 
@@ -190,12 +189,12 @@ body {
 .sticky-controls {
   position: -webkit-sticky; /* Dukungan untuk browser Safari lawas */
   position: sticky;
-  top: 0;                   /* Menempel pas di batas atas layar */
+  top: 0; /* Menempel pas di batas atas layar */
   background-color: #efefef; /* Samakan dengan warna background body agar teks di bawahnya tidak tembus pandang saat digulung */
-  padding: 10px 0;          /* Jarak atas bawah agar terlihat rapi */
-  z-index: 999;             /* Memastikan tombol berada di atas teks matan saat di-scroll */
+  padding: 10px 0; /* Jarak atas bawah agar terlihat rapi */
+  z-index: 999; /* Memastikan tombol berada di atas teks matan saat di-scroll */
   display: flex;
-  gap: 10px;                /* Jarak antar tombol jika ada lebih dari satu */
+  gap: 10px; /* Jarak antar tombol jika ada lebih dari satu */
   border-bottom: 1px solid #ddd; /* Opsional: memberi batas tipis saat melayang */
 }
 .kitab {
@@ -208,7 +207,7 @@ body {
 }
 
 .kitab h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
@@ -260,11 +259,11 @@ body {
    5. STICKY INTERACTIVE CONTROLS (I'ROB & HARAKAT MAIN)
    ========================================================================== */
 .sticky-irob-container {
-  position: fixed;   /* Mengunci posisi agar melayang mengikuti layar */
-  bottom: 20px;       /* Jarak dari batas bawah layar */
-  left: 20px;        /* Jarak dari batas kiri layar (taruh kiri agar tidak menabrak tombol sidebar di kanan) */
-  z-index: 99999;    /* Angka sangat besar agar selalu berada di lapisan paling atas */
-  
+  position: fixed; /* Mengunci posisi agar melayang mengikuti layar */
+  bottom: 20px; /* Jarak dari batas bawah layar */
+  left: 20px; /* Jarak dari batas kiri layar (taruh kiri agar tidak menabrak tombol sidebar di kanan) */
+  z-index: 99999; /* Angka sangat besar agar selalu berada di lapisan paling atas */
+
   /* Gaya tambahan agar tombol rapi dalam satu kotak */
   display: flex;
   gap: 10px;
@@ -276,34 +275,34 @@ body {
 
 /* Opsional: Membuat tombol di dalamnya berbentuk bulat lingkaran yang serasi */
 .sticky-irob-container {
-  position: fixed;   
-  bottom: 15px;       /* Sedikit lebih turun ke bawah */
-  left: 15px;        /* Sedikit lebih mepet ke kiri */
-  z-index: 99999;    
-  
+  position: fixed;
+  bottom: 15px; /* Sedikit lebih turun ke bawah */
+  left: 15px; /* Sedikit lebih mepet ke kiri */
+  z-index: 99999;
+
   display: flex;
-  gap: 6px;           /* Jarak antar tombol dipersempit */
+  gap: 6px; /* Jarak antar tombol dipersempit */
   background-color: rgba(255, 255, 255, 0.85); /* Lebih transparan halus */
-  padding: 6px;       /* Lapisan luar diperkecil */
+  padding: 6px; /* Lapisan luar diperkecil */
   border-radius: 20px; /* Lengkungan disesuaikan dengan ukuran baru */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Ukuran tombol di dalamnya diperkecil */
 .sticky-irob-container {
-  position: fixed;   
-  bottom: 15px;       
-  
+  position: fixed;
+  bottom: 15px;
+
   /* RUMUS ESTETIK: Mengunci posisi kiri agar sejajar dengan kontainer bagian dalam */
-  left: calc(50% - 600px + 20px); 
-  
-  z-index: 99999;    
+  left: calc(50% - 600px + 20px);
+
+  z-index: 99999;
   display: flex;
-  gap: 6px;           
-  background-color: rgba(255, 255, 255, 0.85); 
-  padding: 6px;       
-  border-radius: 20px; 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); 
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 6px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* RESPONSIVE: Saat layar lebih kecil dari 1200px (seperti di HP/Tablet), otomatis kembali mepet ke kiri biasa agar tidak hilang dari layar */
@@ -315,43 +314,54 @@ body {
 
 /* Ukuran tombol di dalamnya (tetap kecil dan imut) */
 .sticky-irob-container button {
-  width: 32px;        
-  height: 32px;       
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: none;
-  background-color: #ffffff; 
+  border: none !important;      /* Memastikan garis benar-block hilang */
+  outline: none !important;     /* Menghapus outline saat diklik */
+  background-color: #ffffff;
   color: rgb(0, 0, 0);
-  font-size: 11px;    
+  font-size: 11px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-  transition: transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Shadow ditebalkan & diperluas */
+  transition: all 0.2s ease;    /* Transisi lebih halus untuk semua perubahan */
 }
 
+/* Efek saat tombol ditekan (klik) */
 .sticky-irob-container button:active {
-  transform: scale(0.9); 
+  transform: scale(0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Shadow mengecil saat ditekan */
+}
+
+/* Perbaikan: Menambahkan titik (.) pada class selector dan target ke button */
+.sticky-irob-container button:hover,
+.sticky-irob-container button.active {
+  background: #000000;
+  color: #ffffff;
 }
 
 /* Tombol I'rob */
 #toggleIrob {
   background: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
+  /* border: 1px solid #000000; */
+  border: none;
   border-radius: 15px;
   padding: 6px 14px;
   font-size: 0.85rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 #toggleIrob:hover,
 #toggleIrob.active {
-  background: #8b1e4f;
+  background: #000000;
   color: #ffffff;
 }
 
@@ -380,20 +390,21 @@ body {
 #toggleHarakatMain {
   background: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
+  /* border: 1px solid #000000; */
+  border: none;
   border-radius: 15px;
   padding: 6px 14px;
   font-size: 0.85rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
+  0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease; /* Biar transisinya mulus saat diklik */
   margin-right: 8px;
 }
 
 #toggleHarakatMain:hover,
 #toggleHarakatMain.active {
-  background: #8b1e4f;
+  background: #000000;
   color: #ffffff;
 }
 
@@ -635,39 +646,40 @@ body {
    7. SIDEBAR (DAFTAR ISI KITAB)
    ========================================================================== */
 .sidebar {
-  /* Membuat sidebar melayang mengikuti scroll */
-  position: -webkit-sticky;
-  position: sticky;
+  grid-area: sidebar;
+  position: static; /* Biarkan grid menarik tingginya ke bawah secara alami */
+  height: 100%;     /* MEMBUAT KOLOM SAMPAI DI BAWAH (Menghilangkan ruang kosong) */
   
-  /* Atur jarak dari atas layar. 
-     Sesuaikan nilai ini agar pas berada tepat di bawah batas bawah header kamu */
-  top: 185px; 
-  
-  /* Membatasi tinggi maksimum sidebar agar jika menunya panjang, 
-     dia bisa di-scroll sendiri di dalam area sidebar dan tidak terpotong ke bawah layar */
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  
-  /* (Opsional) Jika sidebar kamu belum memiliki background, berikan agar teks di belakangnya tidak tembus */
-  background-color: #fff; 
-  
-  /* Properti padding/margin bawaan kamu tetap biarkan di bawahnya */
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0; /* Memberi pembatas vertikal yang rapi */
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* Ubah padding jadi 0 agar pembungkus sticky di dalamnya bisa pas */
+border: 1.5px solid #dcdcdc;
+  border-radius: 12px; /* Mengatur tingkat kelengkungan kotak */
+  overflow: hidden;
+
 }
 
-
 .sidebar-header {
-  position: relative;
+  /* PERBAIKAN: Ubah menjadi sticky agar judul mengunci saat halaman di-scroll */
+  position: webkit-sticky;
+  position: sticky;
+  top: 0; /* Menempel tepat di batas atas layar browser saat di-scroll */
+  z-index: 10; /* Menjaga agar judul tidak tertutup oleh teks lainnya */
+  
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 15px;
   background: #f5f5f5;
-  border-bottom: 1px solid #d7d7d7;
+  
+  border-top-left-radius: 0;  /* Set ke 0 agar siku-siku */
+  border-top-right-radius: 0; /* Set ke 0 agar siku-siku */
   font-size: 1.5rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-family: "Scheherazade New", serif;
 }
-
 .sidebar-title {
   text-align: center;
 }
@@ -694,6 +706,19 @@ body {
   margin: 0;
   direction: rtl;
   text-align: right;
+}
+
+/* TAMBAHAN UTAMA: Agar daftar isi di bawah judul (ul) juga ikut mengunci dan bisa di-scroll mandiri */
+.sidebar ul {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px; /* Jarak pas di bawah .sidebar-header agar tidak saling tumpang tindih */
+  list-style: none;
+  padding: 15px;
+  
+  /* Membatasi tinggi daftar isi agar jika bab-nya terlalu panjang, muncul scroll internal khusus di dalam aside */
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 
 .sidebar li {
@@ -740,10 +765,10 @@ body {
    ========================================================================== */
 .footer {
   grid-area: footer;
-  background: #fefefe;
-  border: 1px solid #d7d7d7;
-  padding: 15px;
-  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
 }
 
 /* ==========================================================================
@@ -812,7 +837,6 @@ body {
     padding: 5px 10px;
   }
 
-
   .header p {
     font-size: 1.1rem; /* <--- INI PENYEBABNYA! Di HP masih terkunci 2rem (Gede) */
     text-align: right;
@@ -835,15 +859,20 @@ body {
 
   /* Kontrol Khusus Sidebar Melayang (Floating) di HP */
   .sidebar {
-    position: fixed;
+    grid-area: sidebar; /* Memastikan mengunci area grid kanan dari atas sampai bawah footer */
+    position: static;
     top: 0;
     right: -280px; /* sembunyi di luar layar */
     width: 280px;
-    height: 100vh;
+    height: 100%;
     background: #fff;
     z-index: 99999;
     transition: right 0.3s ease;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+border: 1.5px solid #dcdcdc;
+  border-radius: 12px; /* Mengatur tingkat kelengkungan kotak */
+  overflow: hidden;
+
   }
 
   .wrapper.mobile-sidebar-open .sidebar {
@@ -907,5 +936,31 @@ body {
   #popTasrif,
   #popPembahasan {
     font-size: 14px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* ... kode HP yang sudah ada ... */
+
+  /* Perbaikan total saat header disembunyikan di HP */
+  .header-hidden .header {
+    display: none !important; /* Menghilangkan total ruang fisik header di HP */
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    grid-template-columns: 1fr; /* Di HP berubah jadi 1 kolom bertumpuk */
+  }
+
+  .header {
+    grid-column: span 1;
+    position: sticky;
+    top: 0;
+  }
+
+  /* Saat disembunyikan di HP, ruang fisiknya dihilangkan total agar konten naik */
+  .header-hidden .header {
+    display: none !important;
   }
 }

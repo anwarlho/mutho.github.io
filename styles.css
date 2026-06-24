@@ -653,7 +653,7 @@ body {
 }
 
 /* ==========================================================================
-   9. RESPONSIVE MEDIA QUERIES (MOBILE)
+   9. RESPONSIVE MEDIA QUERIES (MODE MOBILE / HP) - UTUH & BERSIH
    ========================================================================== */
 @media (max-width: 768px) {
   body {
@@ -686,7 +686,7 @@ body {
     padding: 15px;
   }
 
-  /* Logika Sembunyikan Header versi Mobile */
+  /* Saat disembunyikan di HP, ruang fisiknya dihilangkan total agar konten naik */
   .header-hidden .header {
     display: none !important; 
   }
@@ -707,23 +707,28 @@ body {
     gap: 8px;
   }
 
+  /* --- SISTEM NAVIGATION SIDEBAR DI HP --- */
   .sidebar {
     position: fixed !important;
     top: 0 !important;
-    right: -100% !important; 
+    right: -100% !important; /* Tersembunyi aman di kanan luar layar */
     width: 280px !important;
     height: 100vh !important;
     background-color: #ffffff !important;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2) !important;
     z-index: 99999 !important; 
-    transition: right 0.3s ease !important;
+    transition: right 0.3s ease !important; /* Efek slide geser mulus */
+    padding: 20px !important;
+    margin: 0 !important;
     grid-area: auto !important; 
   }
 
+  /* DIPERBAIKI: Menggunakan !important agar sukses memaksa sidebar muncul */
   .mobile-sidebar-open .sidebar {
     right: 0 !important; 
   }
 
+  /* Membuat background gelap transparan (overlay) di belakang sidebar saat terbuka */
   .mobile-sidebar-open::before {
     content: "";
     position: fixed !important;
@@ -735,39 +740,59 @@ body {
     z-index: 99998 !important;
   }
 
- /* Tombol Menu Sidebar Mengambang di HP (VERSI IMUT & ELEGAN) */
+  /* Memastikan daftar isi (ul) tampil tegak lurus ke bawah dan bisa di-scroll di dalam menu HP */
+  .sidebar ul {
+    display: block !important;
+    list-style: none;
+    padding: 15px 0;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  /* Tombol Menu Sidebar Mengambang Bulat Imut di Pojok Kanan Bawah HP */
   #toggleSidebar {
     position: fixed !important;
     top: auto !important;
     left: auto !important;
-    bottom: 25px !important;       /* Jarak dari bawah dinaikkan dikit biar pas di jempol */
-    right: 20px !important;        /* Jarak dari kanan */
     
-    /* UKURAN BARU: Lebih ramping dan estetik */
-    width: 38px !important;        
-    height: 38px !important;       
+    /* Posisi peletakan di layar HP */
+    bottom: 15px !important;       /* Disamakan dengan bottom .sticky-irob-container */
+    right: 20px !important;        
+    
+    /* UKURAN & BENTUK: Meniru persis .sticky-irob-container button */
+    width: 32px !important;        /* Diubah dari 38px ke 32px agar presisi */
+    height: 32px !important;       /* Diubah dari 38px ke 32px agar presisi */
     border-radius: 50% !important; 
-    background: #000000 !important; /* Warna hitam pekat elegan */
-    color: #ffffff !important;
-    border: none !important;
+    border: none !important;      
+    outline: none !important;     
+    background-color: #ffffff !important; /* Diubah ke putih bawaan tombol i'rob */
+    color: #000000 !important;           /* Warna ikon garis tiga menjadi hitam */
     
     z-index: 999999 !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    font-size: 16px !important;    /* Ukuran ikon garis tiga (☰) dikecilkan agar seimbang */
+    font-size: 11px !important;    /* Ukuran ikon disamakan dengannya (kecil & imut) */
+    font-weight: bold !important;
     
-    /* Efek bayangan tipis halus khas iOS, bukan bayangan tebal kasar */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    /* EFEK BAYANGAN: Meniru gaya bayangan tombol i'rob */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important; 
     cursor: pointer;
-    transition: all 0.2s ease !important;
+    transition: all 0.2s ease !important;    
   }
 
-  /* Efek membal menciut pas diklik di HP */
+  /* Efek membal memantul saat tombol di-klik di layar HP */
   #toggleSidebar:active {
-    transform: scale(0.90) !important;
+    transform: scale(0.9) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important; 
   }
 
+  /* Efek ketika sidebar sedang terbuka (opsional: jika ingin berubah hitam) */
+  .mobile-sidebar-open #toggleSidebar {
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+  /* Apple Popup Bottom Sheet di HP */
   .apple-popup {
     position: fixed !important;
     left: 0 !important;

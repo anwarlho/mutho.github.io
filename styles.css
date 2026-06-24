@@ -961,3 +961,40 @@ border: 1.5px solid #dcdcdc;
     display: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  /* Paksa posisi melayang penuh untuk HP */
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    right: -100% !important; /* Tersembunyi di kanan luar */
+    width: 280px !important;
+    height: 100vh !important;
+    background-color: #ffffff !important;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2) !important;
+    z-index: 99999 !important; /* Naikkan layer di atas segalanya */
+    transition: right 0.3s ease !important;
+    padding: 20px !important;
+    margin: 0 !important;
+    
+    /* Batalkan sifat grid bawaan desktop */
+    grid-area: auto !important; 
+  }
+
+  /* Logika ketika sidebar dipicu terbuka oleh JavaScript */
+  .mobile-sidebar-open .sidebar {
+    right: 0 !important; /* Geser meluncur masuk ke layar HP */
+  }
+
+  /* Tambahan: Lapisan latar belakang gelap saat menu terbuka */
+  .mobile-sidebar-open::before {
+    content: "";
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 99998 !important;
+  }
+}

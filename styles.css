@@ -605,7 +605,10 @@ body {
   color: #000000;
   line-height: 1.5;
   direction: ltr;
-  text-align: justify;
+  text-align: right;
+  unicode-bidi: isolate;
+  font-family: Arial, Helvetica, sans-serif;
+  
 }
 
 /* Mengatur font dan kerapian teks analisis nahwu di dalam pop-up */
@@ -615,6 +618,8 @@ body {
   line-height: 1.6;
   text-align: justify;
   direction: ltr; /* Mengikuti pembacaan Indonesia dari kiri ke kanan */
+  unicode-bidi: isolate;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .quran-text {
@@ -629,6 +634,15 @@ body {
   line-height: 1.6;
   text-align: justify;
   direction: ltr;
+  unicode-bidi: isolate;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ganti .box-analisis-sharaf dengan class box pop-up Anda yang sebenarnya */
+.box-analisis-sharaf {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate; 
 }
 
 /* Badge untuk kode I'rob */
@@ -933,6 +947,10 @@ border: 1.5px solid #dcdcdc;
   #popTasrif,
   #popPembahasan {
     font-size: 14px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate;
   }
 }
 

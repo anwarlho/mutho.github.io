@@ -59,7 +59,6 @@ body {
   padding: 12px 20px; 
   justify-content: flex-start; 
   
-  /* Agar langsung melar mengikuti konten dari awal */
   height: auto; 
   overflow: visible; 
   
@@ -83,30 +82,25 @@ body {
   font-family: "Scheherazade New", serif;
   font-size: 1.6rem; 
   line-height: 1.8;
-  display: block; /* Langsung tampil dari awal */
+  display: block; 
   width: 100%; 
   margin-top: 10px;
   color: #000000;
 }
 
-/* Tombol Perubahan Harakat di Header (حر) */
+/* Tombol Harakat Bulat Imut di Header (حر) */
 #toggleHarakat {
-  background: #f5f5f7;        /* Warna abu-abu terang elegan khas Apple */
-  color: #1d1d1f;             /* Warna teks gelap minimalis */
-  border: 1px solid #d2d2d7;   /* Border tipis halus */
-  
-  /* PEMBARUAN: Membuat lingkaran bulat sempurna */
-  width: 30px;                /* Tentukan lebar tombol */
-  height: 30px;               /* Tentukan tinggi yang sama dengan lebar */
-  border-radius: 50%;         /* Paksa lingkaran sempurna menggunakan 50% */
-  padding: 0;                 /* Hapus padding agar teks berada di tengah simetris */
-  
-  /* Membuat isi teks "حر" berada tepat di tengah lingkaran */
+  background: #f5f5f7;        
+  color: #1d1d1f;             
+  border: 1px solid #d2d2d7;   
+  width: 30px;                
+  height: 30px;               
+  border-radius: 50%;         
+  padding: 0;                 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 0.75rem;         /* Ukuran teks diperkecil */
+  font-size: 0.75rem;         
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
   font-weight: 600;           
   cursor: pointer;
@@ -114,26 +108,21 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); 
 }
 
-/* Efek saat kursor diarahkan ke tombol */
 #toggleHarakat:hover {
   background: #e8e8ed;        
   border-color: #86868b;
 }
 
-/* Efek saat tombol aktif (Harakat Menyala) */
 #toggleHarakat.active {
-  background: #000000;        /* Menjadi hitam solid minimalis */
-  color: #ffffff;             /* Teks menjadi putih */
+  background: #000000;        
+  color: #ffffff;             
   border-color: #000000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Efek animasi mikro membal saat tombol diklik */
 #toggleHarakat:active {
   transform: scale(0.90);     
 }
-
-
 
 /* Manajemen Sembunyikan Header secara Global (Tombol ه) */
 .header-hidden .header {
@@ -381,7 +370,7 @@ body {
 }
 
 .apple-popup.show {
-  display: flex;
+  display: flex !important;
 }
 
 @keyframes quranFadeUp {
@@ -513,18 +502,18 @@ body {
   font-size: 16px !important;
   color: #000000;
   line-height: 1.5;
-  direction: ltr;
-  text-align: right;
+  text-align: justify; /* Mengubah rata kanan menjadi rata kiri-kanan */
+  direction: ltr;      /* Menjaga pembacaan dari kiri ke kanan (Left-to-Right) */
   unicode-bidi: isolate;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .quran-text-nahwu, .quran-text-pembahasan {
   font-size: 16px !important;
-  color: #374151;
-  line-height: 1.6;
-  text-align: justify;
-  direction: ltr;
+  color: #000000;
+  line-height: 1.5;
+  text-align: justify; /* Mengubah rata kanan menjadi rata kiri-kanan */
+  direction: ltr;      /* Menjaga pembacaan dari kiri ke kanan (Left-to-Right) */
   unicode-bidi: isolate;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -653,7 +642,7 @@ body {
 }
 
 /* ==========================================================================
-   9. RESPONSIVE MEDIA QUERIES (MODE MOBILE / HP) - UTUH & BERSIH
+   9. RESPONSIVE MEDIA QUERIES (MODE HP / MOBILE)
    ========================================================================== */
 @media (max-width: 768px) {
   body {
@@ -686,7 +675,6 @@ body {
     padding: 15px;
   }
 
-  /* Saat disembunyikan di HP, ruang fisiknya dihilangkan total agar konten naik */
   .header-hidden .header {
     display: none !important; 
   }
@@ -702,33 +690,32 @@ body {
 
   .sticky-irob-container {
     left: 15px;
+    bottom: 15px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
 
-  /* --- SISTEM NAVIGATION SIDEBAR DI HP --- */
+  /* MANAGEMENT NAVIGATION HP */
   .sidebar {
     position: fixed !important;
     top: 0 !important;
-    right: -100% !important; /* Tersembunyi aman di kanan luar layar */
+    right: -100% !important; 
     width: 280px !important;
     height: 100vh !important;
     background-color: #ffffff !important;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2) !important;
     z-index: 99999 !important; 
-    transition: right 0.3s ease !important; /* Efek slide geser mulus */
+    transition: right 0.3s ease !important;
     padding: 20px !important;
     margin: 0 !important;
     grid-area: auto !important; 
   }
 
-  /* DIPERBAIKI: Menggunakan !important agar sukses memaksa sidebar muncul */
   .mobile-sidebar-open .sidebar {
     right: 0 !important; 
   }
 
-  /* Membuat background gelap transparan (overlay) di belakang sidebar saat terbuka */
   .mobile-sidebar-open::before {
     content: "";
     position: fixed !important;
@@ -740,7 +727,6 @@ body {
     z-index: 99998 !important;
   }
 
-  /* Memastikan daftar isi (ul) tampil tegak lurus ke bawah dan bisa di-scroll di dalam menu HP */
   .sidebar ul {
     display: block !important;
     list-style: none;
@@ -749,50 +735,42 @@ body {
     overflow-y: auto;
   }
 
-  /* Tombol Menu Sidebar Mengambang Bulat Imut di Pojok Kanan Bawah HP */
+  /* TOMBOL FLOATING SIDEBAR DI HP (IDENTIK DENGAN STICKY CONTROLS) */
   #toggleSidebar {
     position: fixed !important;
     top: auto !important;
     left: auto !important;
-    
-    /* Posisi peletakan di layar HP */
-    bottom: 15px !important;       /* Disamakan dengan bottom .sticky-irob-container */
+    bottom: 15px !important;       
     right: 20px !important;        
-    
-    /* UKURAN & BENTUK: Meniru persis .sticky-irob-container button */
-    width: 32px !important;        /* Diubah dari 38px ke 32px agar presisi */
-    height: 32px !important;       /* Diubah dari 38px ke 32px agar presisi */
+    width: 32px !important;        
+    height: 32px !important;       
     border-radius: 50% !important; 
     border: none !important;      
     outline: none !important;     
-    background-color: #ffffff !important; /* Diubah ke putih bawaan tombol i'rob */
-    color: #000000 !important;           /* Warna ikon garis tiga menjadi hitam */
-    
+    background-color: #ffffff !important; 
+    color: #000000 !important;           
     z-index: 999999 !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    font-size: 11px !important;    /* Ukuran ikon disamakan dengannya (kecil & imut) */
+    font-size: 11px !important;    
     font-weight: bold !important;
-    
-    /* EFEK BAYANGAN: Meniru gaya bayangan tombol i'rob */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important; 
     cursor: pointer;
     transition: all 0.2s ease !important;    
   }
 
-  /* Efek membal memantul saat tombol di-klik di layar HP */
   #toggleSidebar:active {
     transform: scale(0.9) !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important; 
   }
 
-  /* Efek ketika sidebar sedang terbuka (opsional: jika ingin berubah hitam) */
   .mobile-sidebar-open #toggleSidebar {
     background: #000000 !important;
     color: #ffffff !important;
   }
-  /* Apple Popup Bottom Sheet di HP */
+
+  /* BOTTOM SHEET DI HP (SISTEM POPUP AGAR TETAP KELUAR) */
   .apple-popup {
     position: fixed !important;
     left: 0 !important;

@@ -7,23 +7,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleSidebar = document.getElementById("toggleSidebar");
   const wrapper = document.querySelector(".wrapper");
 
-  // SEJAK AWAL: Teks matan diset gundul (tampilHarakat = false)
   let tampilHarakat = false; 
 
   if (matan && tombol) {
     tombol.addEventListener("click", function () {
       tampilHarakat = !tampilHarakat;
-
-      // Ambil elemen bab yang sedang aktif di-scroll saat ini
       const babAktif = document.querySelector(".judul-bab.aktif-scroll");
 
       if (babAktif) {
         if (tampilHarakat) {
-          // Ganti ke teks penuh harakat
           matan.innerText = babAktif.getAttribute("data-matan-full");
           this.classList.add("active");
         } else {
-          // Kembalikan ke teks gundul kosongan
           matan.innerText = babAktif.getAttribute("data-matan-gundul");
           this.classList.remove("active");
         }
@@ -31,9 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Pengendali Sidebar
+  // Pengendali Sidebar HP & Desktop
   if (toggleSidebar && wrapper) {
-    toggleSidebar.addEventListener("click", () => {
+    toggleSidebar.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (window.innerWidth <= 768) {
         wrapper.classList.toggle("mobile-sidebar-open");
       } else {
@@ -42,16 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Klik di luar untuk menutup sidebar mobile
+  document.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768 && wrapper && wrapper.classList.contains("mobile-sidebar-open")) {
+      const sidebar = document.querySelector(".sidebar");
+      if (sidebar && !sidebar.contains(e.target) && e.target !== toggleSidebar) {
+        wrapper.classList.remove("mobile-sidebar-open");
+      }
+    }
+  });
+
+
   // ==========================================================================
-  // 2. INTERAKSI KLIK KATA (POPUP INTERAKTIF ALA QURAN.COM)
+  // 2. INTERAKSI KLIK KATA (POPUP INTERAKTIF ELEGAN) - SUDAH DIPERBAIKI
   // ==========================================================================
   const kataElements = document.querySelectorAll(".kata");
-  const popup = document.getElementById("applePopup");
+  const popup = document.getElementById("commentaryPanel"); // PERBAIKAN: Menggunakan ID yang benar sesuai HTML
   const closePanel = document.getElementById("closePanel");
 
   const popHarakat = document.getElementById("popHarakat");
   const popJawa = document.getElementById("popJawa");
-  const popNuahu = document.getElementById("popNahwu");
+  const popNahwu = document.getElementById("popNahwu");
   const popTasrif = document.getElementById("popTasrif");
   const popPembahasan = document.getElementById("popPembahasan");
 
@@ -65,15 +72,21 @@ document.addEventListener("DOMContentLoaded", () => {
       kataElements.forEach((k) => k.classList.remove("active"));
       kata.classList.add("active");
 
-      // Isi Data dari Atribut HTML kata ke Popup
-      popHarakat.innerText = kata.getAttribute("data-harakat") || "-";
-      popJawa.innerText = kata.getAttribute("data-jawa") || "-";
-      if (popNuahu) popNuahu.innerText = kata.getAttribute("data-nahwu") || "-";
-      popTasrif.innerText = kata.getAttribute("data-sharaf") || "-";
-      popPembahasan.innerText = kata.getAttribute("data-pembahasan") || "-";
+      // PERBAIKAN: Memasukkan Lafadz Kata yang diklik ke judul popup atas (id="popkata" di HTML)
+      const popKataHtml = document.getElementById("popkata");
+      if (popKataHtml) {
+        popKataHtml.innerText = kata.innerText;
+      }
 
-      // Mengatur Posisi Popup Dinamis (Khusus Desktop)
-      if (window.innerWidth > 768) {
+      // PERBAIKAN: Menyesuaikan pengambilan atribut yang benar dari HTML (.kata)
+      if (popHarakat) popHarakat.innerText = kata.getAttribute("data-harakat") || "-";
+      if (popJawa) popJawa.innerText = kata.getAttribute("data-jawa") || "-";
+      if (popNahwu) popNahwu.innerText = kata.getAttribute("data-irob") || "-"; // Menggunakan data-irob
+      if (popTasrif) popTasrif.innerText = kata.getAttribute("data-tasrif") || "-"; // Menggunakan data-tasrif
+      if (popPembahasan) popPembahasan.innerText = kata.getAttribute("data-pembahasan") || "-";
+
+      // Pengaturan Posisi Popup Dinamis (Khusus Desktop)
+      if (window.innerWidth > 768 && popup) {
         const rect = kata.getBoundingClientRect();
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -90,60 +103,53 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.left = `${popupLeft}px`;
       }
 
-      popup.classList.add("show");
+      // Tampilkan Popup dengan menambahkan class 'show'
+      if (popup) {
+        popup.classList.add("show");
+      }
     });
   });
 
-  if (closePanel) {
+  // Event handler untuk menutup popup melalui tombol 'close'
+  if (closePanel && popup) {
     closePanel.addEventListener("click", () => {
       popup.classList.remove("show");
       kataElements.forEach((k) => k.classList.remove("active"));
     });
   }
 
+  // Klik di luar popup untuk menutup
   document.addEventListener("click", (e) => {
-    if (popup && !popup.contains(e.target)) {
-      popup.classList.remove("show");
-      kataElements.forEach((k) => k.classList.remove("active"));
+    if (popup && popup.classList.contains("show")) {
+      if (!popup.contains(e.target)) {
+        popup.classList.remove("show");
+        kataElements.forEach((k) => k.classList.remove("active"));
+      }
     }
   });
 
-  // Sistem Navigasi Tab PopUp
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      tabContents.forEach((c) => c.classList.remove("active"));
 
-      btn.classList.add("active");
-      const tabId = btn.getAttribute("data-tab");
-      const targetTab = document.getElementById(`tab-${tabId}`);
-      if (targetTab) targetTab.classList.add("active");
+  // ==========================================================================
+  // 3. SISTEM NAVIGASI TAB DI DALAM POPUP
+  // ==========================================================================
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetTab = button.getAttribute("data-tab");
+
+      tabButtons.forEach((btn) => btn.classList.remove("active"));
+      tabContents.forEach((content) => content.classList.remove("active"));
+
+      button.classList.add("active");
+      const activeContent = document.getElementById(targetTab);
+      if (activeContent) {
+        activeContent.classList.add("active");
+      }
     });
   });
 
-  // ==========================================================================
-  // 3. GLOBAL INTERACTIVE CONTROLS (I'ROB & HARAKAT MAIN)
-  // ==========================================================================
-  const toggleIrob = document.getElementById("toggleIrob");
-  const toggleHarakatMain = document.getElementById("toggleHarakatMain");
-  const kitabContainer = document.querySelector(".kitab");
-
-  if (toggleIrob && kitabContainer) {
-    toggleIrob.addEventListener("click", () => {
-      kitabContainer.classList.toggle("show-irob");
-      toggleIrob.classList.toggle("active");
-    });
-  }
-
-  if (toggleHarakatMain && kitabContainer) {
-    toggleHarakatMain.addEventListener("click", () => {
-      kitabContainer.classList.toggle("show-harakat-main");
-      toggleHarakatMain.classList.toggle("active");
-    });
-  }
 
   // ==========================================================================
-  // 4. MANAGEMENT HIDDEN HEADER (TOMBOL ه UNTUK TUTUP/MUNCULKAN HEADER)
+  // 4. KONTROL SENSE / VISIBILITAS HEADER UTAMA
   // ==========================================================================
   const toggleHeaderBtn = document.getElementById("toggleHeader");
   if (toggleHeaderBtn) {
@@ -153,16 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
   // ==========================================================================
-  // 5. OBSERVER DETEKSI BAB AKTIF (SAAT HALAMAN DI-SCROLL)
+  // 5. OBSERVER DETEKSI BAB AKTIF (BILA DI-SCROLL)
   // ==========================================================================
   const judulBab = document.querySelectorAll(".judul-bab");
 
   if (matan && judulBab.length > 0) {
-    // Set aktif-scroll pada bab pertama sejak awal halaman dimuat
     judulBab[0].classList.add("aktif-scroll");
-
-    // Set teks awal header mengikuti matan gundul bab pertama agar tidak kosong
     matan.innerText = judulBab[0].getAttribute("data-matan-gundul");
 
     const observerOptions = {
@@ -176,19 +180,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (entry.isIntersecting) {
           const babAktif = entry.target;
 
-          // Tandai bab mana yang sedang aktif di layar
           judulBab.forEach((b) => b.classList.remove("aktif-scroll"));
           babAktif.classList.add("aktif-scroll");
 
-          // Ambil data matan dari bab yang aktif
-          const teksBerharakat = babAktif.getAttribute("data-matan-full");
-          const teksGundul = babAktif.getAttribute("data-matan-gundul");
-
-          // Tampilkan teks berdasarkan status tombol 'حر' saat ini
           if (tampilHarakat) {
-            matan.innerText = teksBerharakat;
+            matan.innerText = babAktif.getAttribute("data-matan-full");
           } else {
-            matan.innerText = teksGundul;
+            matan.innerText = babAktif.getAttribute("data-matan-gundul");
           }
         }
       });

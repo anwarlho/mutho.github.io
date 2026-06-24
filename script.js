@@ -7,19 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleSidebar = document.getElementById("toggleSidebar");
   const wrapper = document.querySelector(".wrapper");
 
-  if (matan && tombol) {
-    const tanpaHarakat = matan.innerText.trim();
-    const denganHarakat = matan.getAttribute("data-harakat");
-    let tampilHarakat = false;
+  let tampilHarakat = false;
 
+  if (matan && tombol) {
     tombol.addEventListener("click", function () {
       tampilHarakat = !tampilHarakat;
-      matan.innerText = tampilHarakat ? denganHarakat : tanpaHarakat;
 
-      if (tampilHarakat) {
-        this.classList.add("active");
-      } else {
-        this.classList.remove("active");
+      // Ambil elemen bab yang sedang aktif di-scroll saat ini
+      const babAktif = document.querySelector(".judul-bab.aktif-scroll");
+
+      if (babAktif) {
+        if (tampilHarakat) {
+          // Ambil matan full harakat dari bab aktif
+          matan.innerText = babAktif.getAttribute("data-matan-full");
+          this.classList.add("active");
+        } else {
+          // Ambil matan gundul dari bab aktif (BUKAN h1 textContent-nya lagi)
+          matan.innerText = babAktif.getAttribute("data-matan-gundul");
+          this.classList.remove("active");
+        }
       }
     });
   }
@@ -33,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
   // ==========================================================================
   // 2. KONTROL POP-UP KATA MELAYANG & LOGIKA PERPINDAHAN TAB MENU
   // ==========================================================================
@@ -44,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const popHarakat = document.getElementById("popHarakat");
   const popJawa = document.getElementById("popJawa");
   const popIrob = document.getElementById("popIrob");
-  const popNahwu = document.getElementById("popNahwu"); // <-- BARU: mendaftarkan id popNahwu
+  const popNahwu = document.getElementById("popNahwu");
   const popTasrif = document.getElementById("popTasrif");
   const popPembahasan = document.getElementById("popPembahasan");
 
@@ -70,22 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
       semuaKata.forEach((k) => k.classList.remove("active"));
       this.classList.add("active");
 
-      // Mengambil data dari atribut HTML kata yang diklik
       const harakat = this.getAttribute("data-harakat") || "-";
       const jawa = this.getAttribute("data-jawa") || "-";
       const irob = this.getAttribute("data-irob") || "-";
-
-      // DIBAWAH INI PERBAIKAN ERROR: Dari 'element.getAttribute' diubah menjadi 'this.getAttribute'
       const nahwuData = this.getAttribute("data-nahwu") || "-";
-
       const tasrif = this.getAttribute("data-tasrif") || "-";
       const pembahasan = this.getAttribute("data-pembahasan") || "-";
 
-      // Memasukkan data ke dalam elemen pop-up
       if (popHarakat) popHarakat.textContent = harakat;
       if (popJawa) popJawa.innerHTML = `&lrm;${jawa}&lrm;`;
       if (popIrob) popIrob.textContent = irob;
-      if (popNahwu) popNahwu.textContent = nahwuData; // <-- BARU: menampilkan data nahwu ke pop-up
+      if (popNahwu) popNahwu.textContent = nahwuData;
       if (popTasrif) popTasrif.textContent = tasrif;
       if (popPembahasan) popPembahasan.textContent = pembahasan;
 
@@ -144,16 +144,18 @@ document.addEventListener("DOMContentLoaded", () => {
       semuaKata.forEach((k) => k.classList.remove("active"));
     }
   });
-  // --- BARU: LOGIKA SEMBUNYIKAN / TAMPILKAN HEADER ---
+
+  // --- LOGIKA SEMBUNYIKAN / TAMPILKAN HEADER ---
   const toggleHeaderBtn = document.getElementById("toggleHeader");
 
   if (toggleHeaderBtn && wrapper) {
     toggleHeaderBtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Mencegah bentrokan event click lain
+      e.stopPropagation();
       wrapper.classList.toggle("header-hidden");
       this.classList.toggle("active");
     });
   }
+
   // ==========================================================================
   // 3. FITUR TOGGLE VIEW (IROB DI ATAS KATA & HARAKAT UTAMA)
   // ==========================================================================
@@ -182,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.innerWidth > 768) return;
 
     const sidebar = document.querySelector(".sidebar");
-    // Tambahkan pengecekan agar klik pada toggleHeader tidak ikut memicu penutupan paksa layout
     if (
       wrapper &&
       wrapper.classList.contains("mobile-sidebar-open") &&
@@ -193,46 +194,50 @@ document.addEventListener("DOMContentLoaded", () => {
       wrapper.classList.remove("mobile-sidebar-open");
     }
   });
-});
 
-// ==========================================================================
-// 4. LOGIKA OTOMATIS GANTI TULISAN MATAN HEADER SAAT DIGESER (SCROLL) + SINKRON HARAKAT
-// ==========================================================================
-const judulBab = document.querySelectorAll(".judul-bab");
+  // ==========================================================================
+  // 4. LOGIKA OTOMATIS GANTI TULISAN MATAN HEADER SAAT DIGESER (SCROLL)
+  // ==========================================================================
+  const judulBab = document.querySelectorAll(".judul-bab");
 
-if (matan && judulBab.length > 0) {
-  const observerOptions = {
-    root: null,
-    rootMargin: "-10% 0px -70% 0px", // Memicu perubahan saat bab mendekati atas layar
-    threshold: 0,
-  };
+  if (matan && judulBab.length > 0) {
+    // Set aktif-scroll pada bab pertama sejak awal halaman dimuat
+    judulBab[0].classList.add("aktif-scroll");
 
-  const babObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const babAktif = entry.target;
+    // Set teks awal header mengikuti matan gundul bab pertama
+    matan.innerText = judulBab[0].getAttribute("data-matan-gundul");
 
-        // 1. Ambil data teks dari elemen h1 yang sedang aktif di layar
-        const matanDenganHarakat = babAktif.getAttribute("data-matan-full");
-        // Mengambil teks asli dari h1 (misal: "كتاب الغصب") sebagai teks tanpa harakat/sederhana
-        const matanTanpaHarakat = babAktif.textContent.trim();
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0,
+    };
 
-        // 2. Update atribut data-harakat pada header agar tombol 'حر' tahu teks apa yang harus diubah
-        matan.setAttribute("data-harakat", matanDenganHarakat);
+    const babObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const babAktif = entry.target;
 
-        // 3. SINKRONISASI: Cek variabel status 'isHarakatActive' dari kode bawaan Anda
-        if (isHarakatActive) {
-          // Jika tombol 'حر' sedang aktif (warna hijau), tampilkan yang berharakat lengkap
-          matan.innerText = matanDenganHarakat;
-        } else {
-          // Jika tombol 'حر' sedang mati, tampilkan tulisan bab biasa tanpa harakat lengkap
-          matan.innerText = matanTanpaHarakat;
+          // Tandai bab mana yang sedang aktif di layar
+          judulBab.forEach((b) => b.classList.remove("aktif-scroll"));
+          babAktif.classList.add("aktif-scroll");
+
+          // Ambil data matan dari bab yang aktif
+          const teksBerharakat = babAktif.getAttribute("data-matan-full");
+          const teksGundul = babAktif.getAttribute("data-matan-gundul");
+
+          // Tampilkan ke header id="matan" berdasarkan status tombol 'حر'
+          if (tampilHarakat) {
+            matan.innerText = teksBerharakat;
+          } else {
+            matan.innerText = teksGundul;
+          }
         }
-      }
-    });
-  }, observerOptions);
+      });
+    }, observerOptions);
 
-  judulBab.forEach((bab) => {
-    babObserver.observe(bab);
-  });
-}
+    judulBab.forEach((bab) => {
+      babObserver.observe(bab);
+    });
+  }
+});

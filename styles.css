@@ -858,21 +858,18 @@ border: 1.5px solid #dcdcdc;
   }
 
   /* Kontrol Khusus Sidebar Melayang (Floating) di HP */
-  .sidebar {
-    grid-area: sidebar; /* Memastikan mengunci area grid kanan dari atas sampai bawah footer */
-    position: static;
+ .sidebar {
+    position: fixed;
     top: 0;
-    right: -280px; /* sembunyi di luar layar */
-    width: 280px;
-    height: 100%;
-    background: #fff;
-    z-index: 99999;
-    transition: right 0.3s ease;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-border: 1.5px solid #dcdcdc;
-  border-radius: 12px; /* Mengatur tingkat kelengkungan kotak */
-  overflow: hidden;
-
+    right: -100%; /* Sembunyikan di luar layar sebelah kanan secara default */
+    width: 280px;  /* Atur lebar kotak menu melayang */
+    height: 100vh; /* Penuh dari atas sampai bawah layar */
+    background-color: #ffffff; /* Beri warna latar belakang agar tidak transparan */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Pastikan berada di atas konten utama dan header */
+    transition: right 0.3s ease; /* Efek animasi geser halus saat dibuka */
+    padding: 20px;
+    margin: 0; /* Reset margin bawaan */
   }
 
   .wrapper.mobile-sidebar-open .sidebar {

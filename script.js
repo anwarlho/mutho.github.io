@@ -241,3 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+if (popJawa) {
+  popJawa.innerHTML = jawa.replace(/\|/g, "<br>");
+}

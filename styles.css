@@ -1016,3 +1016,7 @@ border: 1.5px solid #dcdcdc;
     z-index: 99998 !important;
   }
 }
+#popJawa {
+  white-space: normal;
+  line-height: 1.6;
+}
